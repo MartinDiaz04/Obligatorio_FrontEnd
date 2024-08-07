@@ -1,19 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { guardarDepartamentos } from "../features/departamentoSlice";
+import { guardarCiudades } from "../features/ciudadSlice";
 
 const Registro = () => {
   const url = "https://babytracker.develotion.com/";
-  const [departamentos, setDepartamentos] = useState([]);
-  const [ciudades, setCiudades] = useState([]);
+
+  const dispatch = useDispatch();
   const usuario = useRef(null);
   const pass = useRef(null);
   const departamentoActual = useRef(null);
   const ciudad = useRef(null);
+  const departamentos = useSelector(state => state.departamento.listaDepartamentos)
+  const ciudades = useSelector(state => state.ciudad.listaCiudades)
 
   useEffect(() => {
     fetch(url + "/departamentos.php")
       .then((r) => r.json())
       .then((data) => {
-        setDepartamentos(data.departamentos || []);
+        dispatch(guardarDepartamentos(data.departamentos));
       })
       .catch((error) => {
         console.log(error);
@@ -24,12 +29,13 @@ const Registro = () => {
     fetch(url + "/ciudades.php?idDepartamento=" + departamentoActual.current.value)
       .then((r) => r.json())
       .then((data) => {
-        setCiudades(data.ciudades || []);
+        dispatch(guardarCiudades(data.ciudades));
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
 
   const verificarUsuario = () => {
     if (!usuario.current.value) {
