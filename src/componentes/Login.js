@@ -15,7 +15,6 @@ const Login = () => {
         }
     }
     const loginUsuario = () => {
-        console.log("Holaaa")
         fetch(url + "/login.php", {
             method: "POST",
             headers: {
