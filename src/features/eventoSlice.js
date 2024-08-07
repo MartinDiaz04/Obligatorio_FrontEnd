@@ -20,5 +20,5 @@ export const eventoSlice = createSlice({
     }   
 })
 
-export const {guardarEventos, agregarEvento, eliminarEvento} = departamentoSlice.actions
+export const {guardarEventos, agregarEvento, eliminarEvento} = eventoSlice.actions
 export default eventoSlice.reducer;
