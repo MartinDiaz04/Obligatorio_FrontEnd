@@ -36,7 +36,7 @@ const Login = () => {
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.codigo == "409") {
+        if (data.codigo === "409") {
           setError(true)
           setMensajeError(data.mensaje)
         } else {
@@ -51,6 +51,9 @@ const Login = () => {
   return (
     <div className="container-fluid">
       <div className="row d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center my-3">
+          <h1 className="">Iniciar Sesion</h1>
+        </div>
         <label className="text-center mt-3" htmlFor="usuario">Ingrese usuario</label>
         <input className="col-6 p-2" type="text" name="usuario" ref={usuario} onChange={verificarCampos}></input>
         <label className="text-center mt-3" htmlFor="pass">Ingrese clave</label>
