@@ -9,8 +9,8 @@ const Menu = () => {
                 <h1 className="">Baby Tracker</h1>
             </div>
             <div className="d-flex justify-content-center">
-                <Link className="boton mx-5" to="registro">Registrarse</Link>
-                <Link className="boton mx-5" to="login">Iniciar Sesion</Link>
+                <Link className="boton mx-5 text-center" to="registro">Registrarse</Link>
+                <Link className="boton mx-5 text-center" to="login">Iniciar Sesion</Link>
             </div>
         </div>
     )
