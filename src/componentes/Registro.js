@@ -63,7 +63,7 @@ const Registro = () => {
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.codigo == "409") {
+        if (data.codigo === 409) {
           setError(true);
         } else {
           localStorage.setItem("apiKey", data.token);
