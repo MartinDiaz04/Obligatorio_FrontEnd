@@ -78,6 +78,9 @@ const Registro = () => {
   return (
     <div className="container-fluid">
       <div className="row d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center my-3">
+          <h1 className="">Registrarse</h1>
+        </div>
         <label className="text-center mt-3" htmlFor="usuario">Ingrese usuario</label>
         <input className="col-6 p-2" type="text" name="usuario" ref={usuario}></input>
         <label className="text-center mt-3" htmlFor="pass">Ingrese clave</label>
