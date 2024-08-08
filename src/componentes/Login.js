@@ -9,20 +9,13 @@ const Login = () => {
   const pass = useRef(null)
   const [error, setError] = useState(false)
   const [mensajeError, setMensajeError] = useState("")
+  const [botonLogin, setBotonLogin] = useState(false)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    document.getElementById("botonLogin").disabled = true
-  }, [])
-
+  // Verifico campos para habilitar el boton de iniciar sesion
   const verificarCampos = () => {
-    if (usuario.current.value && pass.current.value) {
-      document.getElementById("botonLogin").disabled = false
-    }
-    if (!usuario.current.value || !pass.current.value) {
-      document.getElementById("botonLogin").disabled = true
-    }
+    usuario.current.value && pass.current.value ? setBotonLogin(true) : setBotonLogin(false)    
   }
+
   const loginUsuario = () => {
     fetch(url + "/login.php", {
       method: "POST",
@@ -60,7 +53,7 @@ const Login = () => {
         <label className="text-center mt-3" htmlFor="pass">Ingrese clave</label>
         <input className="col-6 p-2" type="password" name="pass" ref={pass} onChange={verificarCampos}></input>
         <label htmlFor="botonlogin"></label>
-        <input className="mt-2 col-3 mx-2 p-2" id="botonLogin" type="button" value="Iniciar Sesion" onClick={loginUsuario} />
+        <input className="mt-2 col-3 mx-2 p-2" disabled={!botonLogin} type="button" value="Iniciar Sesion" onClick={loginUsuario} />
         <Link className="text-center mt-2 mx-2 col-3 boton" to="/">Atras</Link>
         {error ? <p className="text-center mt-5">{mensajeError}</p> : null}
       </div>
