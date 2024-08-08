@@ -9,7 +9,7 @@ export const eventoSlice = createSlice({
     initialState,
     reducers: {
         guardarEventos: (state, action) => {
-            state.listaEventos = action.payload
+            state.listaEventos = action.payload            
         },
         agregarEvento: (state, action) => {
             state.listaEventos.push(action.payload)

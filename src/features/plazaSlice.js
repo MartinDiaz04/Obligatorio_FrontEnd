@@ -9,7 +9,7 @@ export const plazaSlice = createSlice({
     initialState,
     reducers: {
         guardarPlazas: (state, action) => {
-            state.listaPlazas = action.payload
+            state.listaPlazas = action.payload    
         }
     }   
 })

@@ -9,7 +9,7 @@ export const categoriaSlice = createSlice({
     initialState,
     reducers: {
         guardarCategorias: (state, action) => {
-            state.listaCategorias = action.payload
+            state.listaCategorias = action.payload        
         }
     }   
 })
