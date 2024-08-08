@@ -66,8 +66,8 @@ const Registro = () => {
         if (data.codigo === 409) {
           setError(true);
         } else {
-          localStorage.setItem("apiKey", data.token);
-          localStorage.setItem("id", data.id);
+          localStorage.setItem("apiKey", data.apiKey);
+          localStorage.setItem("userId", data.id);
           navigate("/dashboard");
         }
 

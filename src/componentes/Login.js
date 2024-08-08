@@ -36,13 +36,13 @@ const Login = () => {
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.codigo == 409) {
+
+        if (data.codigo === 409) {
           setError(true)
           setMensajeError(data.mensaje)
         } else {
-          localStorage.setItem("apiKey", data.token);
-          localStorage.setItem("id", data.id);
-          console.log("Morena")
+          localStorage.setItem("apiKey", data.apiKey);
+          localStorage.setItem("userId", data.id);          
           navigate("/dashboard")
         }
 
