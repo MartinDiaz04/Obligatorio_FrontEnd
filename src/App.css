@@ -43,7 +43,7 @@
   color: white;
   text-decoration: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 .boton:hover {
   background-color: #262e36;
@@ -51,4 +51,30 @@
 
 #login{
   border: 1px solid black;
+}
+.divLoginRegistro {
+  height: 100vh;
+  align-items: center;
+}
+
+.navBar{
+  height: 80px;
+  background-color: #282c34;
+}
+.navBar ul{
+  list-style: none;
+}
+.navBar h1{
+  color: antiquewhite;
+}
+.navBar a{
+  background-color: #202227;
+  color: antiquewhite;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 0.5s ease;
+}
+.navBar a:hover{
+  background-color: #3c4a58;
 }
