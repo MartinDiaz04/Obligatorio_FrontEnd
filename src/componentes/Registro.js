@@ -76,27 +76,29 @@ const Registro = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row d-flex justify-content-center align-items-center">
-        <div className="d-flex justify-content-center my-3">
-          <h1 className="">Registrarse</h1>
+    <div className='d-flex justify-content-center'>
+      <div className="row w-25 p-5" id='login'>
+        <div className="d-flex justify-content-center mb-2">
+          <h1 className="text-center">Registro</h1>
         </div>
-        <label className="text-center mt-3" htmlFor="usuario">Ingrese usuario</label>
-        <input className="col-6 p-2" type="text" name="usuario" ref={usuario}></input>
-        <label className="text-center mt-3" htmlFor="pass">Ingrese clave</label>
-        <input className="col-6 p-2" type="password" name="pass" ref={pass}></input>
-        <label className="text-center mt-3" htmlFor="departamento">Seleccione departamento:</label>
-        <select className="col-6 text-center p-2" onChange={obtenerCiudades} ref={departamentoActual} name="departamentos">{departamentos.map(departamento => (<option key={departamento.id} value={departamento.id}>{departamento.nombre}
+        <input className="p-2 my-2" type="text" name="usuario" ref={usuario} placeholder="Ingrese usuario"></input>
+        <input className="p-2 my-2" type="password" name="pass" ref={pass} placeholder="Ingrese contraseña"></input>
+        <label className="text-center mt-2" htmlFor="departamento">Seleccione departamento:</label>
+        <select className="text-center p-2" onChange={obtenerCiudades} ref={departamentoActual} name="departamentos">{departamentos.map(departamento => (<option key={departamento.id} value={departamento.id}>{departamento.nombre}
         </option>))}
         </select>
-        <label className="text-center mt-3" htmlFor="ciudades">Seleccione ciudad:</label>
-        <select className="col-6 text-center p-2" name="ciudades" ref={ciudad}>{ciudades.map((ciudad) => (<option key={ciudad.id} value={ciudad.id}> {ciudad.nombre}</option>))}</select>
+        <label className="text-center mt-2" htmlFor="ciudades">Seleccione ciudad:</label>
+        <select className="text-center p-2" name="ciudades" ref={ciudad}>{ciudades.map((ciudad) => (<option key={ciudad.id} value={ciudad.id}> {ciudad.nombre}</option>))}</select>
         <label htmlFor="boton"></label>
-        <input className="mt-2 col-3 mx-2 p-2" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
-        <Link className="text-center mt-2 mx-2 col-3 boton" to="/">Atras</Link>
-        {error ? <p className="text-center mt-5">{mensajeError}</p> : null}
+        <div className='d-flex mt-5 justify-content-center'>
+          <input className="mt-2 mx-2 p-2" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
+          <Link className="text-center mt-2 mx-2 boton" to="/">Atras</Link>
+        </div>
+        {error ? <p className="text-center mt-2">{mensajeError}</p> : null}
       </div>
     </div>
+
+
   );
 };
 
