@@ -26,7 +26,7 @@ const Registro = () => {
         // Guardo el primer departamento para que se carguen sus ciudades automaticamente
         departamentoActual.current.value = data.departamentos[0].id;
         obtenerCiudades();
-      })      
+      })
   }, []);
 
   const obtenerCiudades = () => {
@@ -39,18 +39,14 @@ const Registro = () => {
 
 
   const verificarUsuario = () => {
-    let verificado = false;
-    if (usuario.current.value.trim() == "" || pass.current.value.trim() == "" || usuario.current.value ==null || pass.current.value == null) {      
-      return verificado;  
-    }else{
-      console.log("se registro")
-      verificado = true;
+    if (!usuario.current.value || !pass.current.value || pass.current.value.trim() == "" || usuario.current.value.trim() == "") {
+      return false
     }
-    return verificado;
+    return true;
   };
 
-  const registrarUsuario = () => {    
-    if(verificarUsuario()){      
+  const registrarUsuario = () => {
+    if (verificarUsuario()) {         
       fetch(url + "/usuarios.php", {
         method: "POST",
         headers: {
@@ -70,14 +66,13 @@ const Registro = () => {
           } else {
             localStorage.setItem("apiKey", data.apiKey);
             localStorage.setItem("userId", data.id);
-            navigate("/dashboard");      
+            navigate("/dashboard");
           }
         })
     }else{
-      setMensajeError("El usuario y la contraseña no pueden estar vacíos");
-      setError(true);    
+      setError(true);
+      setMensajeError("Debe completar todos los campos")
     }
-    
 
   };
 
