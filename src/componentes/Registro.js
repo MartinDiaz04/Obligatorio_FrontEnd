@@ -76,7 +76,7 @@ const Registro = () => {
   };
 
   return (
-    <div className='d-flex justify-content-center'>
+    <div className='d-flex justify-content-center divLoginRegistro'>
       <div className="row w-25 p-5" id='login'>
         <div className="d-flex justify-content-center mb-2">
           <h1 className="text-center">Registro</h1>
@@ -91,8 +91,8 @@ const Registro = () => {
         <select className="text-center p-2" name="ciudades" ref={ciudad}>{ciudades.map((ciudad) => (<option key={ciudad.id} value={ciudad.id}> {ciudad.nombre}</option>))}</select>
         <label htmlFor="boton"></label>
         <div className='d-flex mt-5 justify-content-center'>
-          <input className="mt-2 mx-2 p-2" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
           <Link className="text-center mt-2 mx-2 boton" to="/">Atras</Link>
+          <input className="mt-2 mx-2 p-2" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
         </div>
         {error ? <p className="text-center mt-2">{mensajeError}</p> : null}
       </div>

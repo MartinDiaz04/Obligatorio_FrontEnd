@@ -42,7 +42,8 @@ const Login = () => {
   }
 
   return (
-    <div className='d-flex justify-content-center'>
+
+    <div className='d-flex justify-content-center divLoginRegistro'>
       <div className="row w-25 p-5" id='login'>
         <div className="d-flex justify-content-center mb-2">
           <h1 className="text-center">Iniciar Sesion</h1>
@@ -51,12 +52,13 @@ const Login = () => {
         <input className="p-2 my-2" type="password" name="pass" ref={pass} onChange={verificarCampos} placeholder='Ingrese contraseña'></input>
         <label htmlFor="botonlogin"></label>
         <div className='d-flex mt-2 justify-content-center'>
-          <input className="mt-2 mx-2 p-2" disabled={!botonLogin} type="button" value="Iniciar Sesion" onClick={loginUsuario} />
           <Link className="text-center mt-2 mx-2 boton" to="/">Atras</Link>
+          <input className="mt-2 mx-2 p-2" disabled={!botonLogin} type="button" value="Iniciar Sesion" onClick={loginUsuario} />
         </div>
         {error ? <p className="text-center mt-5">{mensajeError}</p> : null}
       </div>
     </div>
+
 
 
 
