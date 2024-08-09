@@ -4,6 +4,7 @@ import { guardarPlazas } from "../features/plazaSlice";
 import { guardarEventos } from "../features/eventoSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AgregarEvento from "./eventos/AgregarEvento";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -41,6 +42,7 @@ const Dashboard = () => {
         .then((r) => r.json())
         .then((data) => {
           dispatch(guardarCategorias(data.categorias))
+          console.log(data)
         })
       // Guardo plazas
       fetch(url + "/plazas.php", {
@@ -62,7 +64,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>hola</h1>
+      <AgregarEvento/>
     </div>
   )
 }
