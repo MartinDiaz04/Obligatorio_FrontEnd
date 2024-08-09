@@ -76,8 +76,8 @@ const Registro = () => {
   };
 
   return (
-    <div className='d-flex justify-content-center divLoginRegistro'>
-      <div className="row w-25 p-5" id='login'>
+    <div className='d-flex justify-content-center divForm'>
+      <div className="row w-25 p-5 borde" >
         <div className="d-flex justify-content-center mb-2">
           <h1 className="text-center">Registro</h1>
         </div>
