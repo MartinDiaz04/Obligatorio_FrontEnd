@@ -26,10 +26,7 @@ const Registro = () => {
         // Guardo el primer departamento para que se carguen sus ciudades automaticamente
         departamentoActual.current.value = data.departamentos[0].id;
         obtenerCiudades();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      })      
   }, []);
 
   const obtenerCiudades = () => {
@@ -42,36 +39,45 @@ const Registro = () => {
 
 
   const verificarUsuario = () => {
-    if (!usuario.current.value || !pass.current.value) {
-      setMensajeError("El usuario y la contraseña no pueden estar vacíos");
+    let verificado = false;
+    if (usuario.current.value.trim() == "" || pass.current.value.trim() == "" || usuario.current.value ==null || pass.current.value == null) {      
+      return verificado;  
+    }else{
+      console.log("se registro")
+      verificado = true;
     }
+    return verificado;
   };
 
-  const registrarUsuario = () => {
-    verificarUsuario();
-    fetch(url + "/usuarios.php", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        usuario: usuario.current.value,
-        pass: pass.current.value,
-        idDepartamento: departamentoActual.current.value,
-        idCiudad: ciudad.current.value,
+  const registrarUsuario = () => {    
+    if(verificarUsuario()){      
+      fetch(url + "/usuarios.php", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          usuario: usuario.current.value,
+          pass: pass.current.value,
+          idDepartamento: departamentoActual.current.value,
+          idCiudad: ciudad.current.value,
+        })
       })
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.codigo === 409) {
-          setError(true);
-        } else {
-          localStorage.setItem("apiKey", data.apiKey);
-          localStorage.setItem("userId", data.id);
-          navigate("/dashboard");
-        }
-
-      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.codigo === 409) {
+            setError(true);
+          } else {
+            localStorage.setItem("apiKey", data.apiKey);
+            localStorage.setItem("userId", data.id);
+            navigate("/dashboard");      
+          }
+        })
+    }else{
+      setMensajeError("El usuario y la contraseña no pueden estar vacíos");
+      setError(true);    
+    }
+    
 
   };
 
