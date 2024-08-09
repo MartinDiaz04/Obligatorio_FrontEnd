@@ -40,6 +40,7 @@ const AgregarEvento = () => {
       const dia = String(hoy.getDate()).padStart(2, '0');
       const fechaGuardar = `${año}-${mes}-${dia} 00:00:00`
       setFecha(fechaGuardar)
+      
     }
     return true;
   }
