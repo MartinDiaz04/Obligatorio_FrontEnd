@@ -5,6 +5,7 @@ import { guardarEventos } from "../features/eventoSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgregarEvento from "./eventos/AgregarEvento";
+import ListarEventos from "./eventos/ListarEventosHoy";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -62,8 +63,9 @@ const Dashboard = () => {
 
 
   return (
-    <div>
+    <div className="d-flex justify-content-center align-items-center">
       <AgregarEvento/>
+      <ListarEventos/>
     </div>
   )
 }
