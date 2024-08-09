@@ -79,3 +79,7 @@
 .navBar a:hover{
   background-color: #3c4a58;
 }
+
+.listaEventos{
+  border: 1px solid black;
+}
