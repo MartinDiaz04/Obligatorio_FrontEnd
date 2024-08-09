@@ -11,7 +11,8 @@ export const eventoSlice = createSlice({
         guardarEventos: (state, action) => {
             state.listaEventos = action.payload            
         },
-        agregarEvento: (state, action) => {
+        agregarEventoLocal: (state, action) => {
+            console.log(action.payload)
             state.listaEventos.push(action.payload)
         },
         eliminarEvento: (state, action) => {
@@ -20,5 +21,5 @@ export const eventoSlice = createSlice({
     }   
 })
 
-export const {guardarEventos, agregarEvento, eliminarEvento} = eventoSlice.actions
+export const {guardarEventos, agregarEventoLocal, eliminarEvento} = eventoSlice.actions
 export default eventoSlice.reducer;
