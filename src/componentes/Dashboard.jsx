@@ -41,8 +41,7 @@ const Dashboard = () => {
       })
         .then((r) => r.json())
         .then((data) => {
-          dispatch(guardarCategorias(data.categorias))
-          console.log(data)
+          dispatch(guardarCategorias(data.categorias))        
         })
       // Guardo plazas
       fetch(url + "/plazas.php", {
