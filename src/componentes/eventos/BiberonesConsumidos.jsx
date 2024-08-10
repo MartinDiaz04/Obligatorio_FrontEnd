@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 const BiberonesConsumidos = () => {
     const eventos = useSelector(state => state.evento.listaEventos)
     const [horaUltimoBiberonHoy, setHoraUltimoBiberonHoy] = useState('')
-    const [cronometro, setCronometro] = useState(0)
+    const [cronometro, setCronometro] = useState('')
     let contador = 0;
     // Calcular cuantos biberones fueron tomados el dia de hoy
     eventos.map(e => {
@@ -37,8 +37,6 @@ const BiberonesConsumidos = () => {
 
     const calcularCronometro = () => {
         let horaActual = new Date().toISOString().split('T')[1].split('.')[0]
-        console.log(horaActual)
-        console.log(horaUltimoBiberonHoy)
         const diferenciaHoras = horaActual.split(':')[0] - horaUltimoBiberonHoy.split(':')[0]
         const diferenciaMinutos = horaActual.split(':')[1] - horaUltimoBiberonHoy.split(':')[1]
         const diferenciaTotal = `${diferenciaHoras - 3} hora/s ${diferenciaMinutos} minuto/s`
