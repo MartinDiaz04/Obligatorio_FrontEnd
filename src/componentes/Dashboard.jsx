@@ -5,7 +5,7 @@ import { guardarEventos } from "../features/eventoSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgregarEvento from "./eventos/AgregarEvento";
-import ListarEventos from "./eventos/ListarEventosHoy";
+import ListarEventosHoy from "./eventos/ListarEventosHoy";
 import ListarEventosAnteriores from "./eventos/ListarEventosAnteriores";
 import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
 import PañalesCambiados from "./eventos/PañalesCambiados";
@@ -31,7 +31,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {         
+        .then((data) => {
           dispatch(guardarEventos(data.eventos))
         })
       // Guardo categorias
@@ -44,7 +44,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {                    
+        .then((data) => {
           dispatch(guardarCategorias(data.categorias))
         })
       // Guardo plazas
@@ -66,21 +66,25 @@ const Dashboard = () => {
 
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div className="text-center">
-        <AgregarEvento />
+    <div className="container">
+      <div className="row mb-4">
+        <div className="col-4 d-flex justify-content-center">
+          <AgregarEvento />
+        </div>
+        <div className="col-4 d-flex">
+          <ListarEventosHoy />
+        </div>
+        <div className="col-4 d-flex">
+          <ListarEventosAnteriores />
+        </div>
       </div>
-      <div className="text-center">
-        <ListarEventos />
-      </div>
-      <div className="text-center">
-        <ListarEventosAnteriores />
-      </div>
-      <div className="text-center">
-        <BiberonesConsumidos />
-      </div>
-      <div className="text-center">
-        <PañalesCambiados />
+      <div className="row">
+        <div className="col-6 d-flex justify-content-center">
+          <BiberonesConsumidos />
+        </div>
+        <div className="col-6 d-flex justify-content-center">
+          <PañalesCambiados />
+        </div>
       </div>
     </div>
   )
