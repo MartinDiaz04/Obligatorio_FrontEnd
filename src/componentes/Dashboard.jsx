@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AgregarEvento from "./eventos/AgregarEvento";
 import ListarEventos from "./eventos/ListarEventosHoy";
+import ListarEventosAnteriores from "./eventos/ListarEventosAnteriores";
+import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -28,7 +30,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {
+        .then((data) => {         
           dispatch(guardarEventos(data.eventos))
         })
       // Guardo categorias
@@ -41,8 +43,8 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {
-          dispatch(guardarCategorias(data.categorias))        
+        .then((data) => {          
+          dispatch(guardarCategorias(data.categorias))
         })
       // Guardo plazas
       fetch(url + "/plazas.php", {
@@ -64,8 +66,18 @@ const Dashboard = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <AgregarEvento/>
-      <ListarEventos/>
+      <div className="text-center">
+        <AgregarEvento />
+      </div>
+      <div className="text-center">
+        <ListarEventos />
+      </div>
+      <div className="text-center">
+        <ListarEventosAnteriores />
+      </div>
+      <div className="text-center">
+        <BiberonesConsumidos />
+      </div>
     </div>
   )
 }
