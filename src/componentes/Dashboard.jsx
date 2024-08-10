@@ -8,6 +8,7 @@ import AgregarEvento from "./eventos/AgregarEvento";
 import ListarEventos from "./eventos/ListarEventosHoy";
 import ListarEventosAnteriores from "./eventos/ListarEventosAnteriores";
 import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
+import PañalesCambiados from "./eventos/PañalesCambiados";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -43,7 +44,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {          
+        .then((data) => {                    
           dispatch(guardarCategorias(data.categorias))
         })
       // Guardo plazas
@@ -77,6 +78,9 @@ const Dashboard = () => {
       </div>
       <div className="text-center">
         <BiberonesConsumidos />
+      </div>
+      <div className="text-center">
+        <PañalesCambiados />
       </div>
     </div>
   )
