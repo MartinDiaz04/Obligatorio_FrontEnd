@@ -16,7 +16,7 @@ const BiberonesConsumidos = () => {
 
     useEffect(() => {
         if (contador == 0) {
-            setCronometro(`No se ha registrado ningún biberón hoy`)
+            setCronometro(`No se ha registrado ningún cambio de pañal hoy`)
         }
         // Calcular a que hora fue el ultimo biberon para hacer el cronometro
         if (contador > 0) {
@@ -29,10 +29,10 @@ const BiberonesConsumidos = () => {
             let ultimoEvento = eventosPañal[eventosPañal.length - 1]
 
 
-            // Obtengo la hora del ultimo biberon consumido
-            let horaUltimoPañal = ultimoEvento.fecha.split(' ')[1]
-            setHoraUltimoPañal(horaUltimoPañal)
-            calcularCronometro()
+            //  Obtengo la hora del ultimo biberon consumido
+            //let horaUltimoPañal = ultimoEvento.fecha.split(' ')[1]
+            //setHoraUltimoPañal(horaUltimoPañal)
+            //calcularCronometro()
         } else {
             setHoraUltimoPañal('')
         }
@@ -50,11 +50,13 @@ const BiberonesConsumidos = () => {
 
 
     return (
-        <div>
-            <h3>Pañales cambiados hoy:</h3>
-            <p>{contador}</p>
-            <h3>Ultimo pañal cambiado hace:</h3>
-            <p>{cronometro}</p>
+        <div className="card shadow-sm mb-4">
+            <div className="card-body text-center">
+                <h3 className="card-title mb-3">Pañales cambiados hoy:</h3>
+                <p className="display-4 mb-3">{contador}</p>
+                <h3 className="card-title mb-3">Último pañal cambiado hace:</h3>
+                <p className="h5 font-weight-bold text-muted">{cronometro}</p>
+            </div>
         </div>
     )
 }
