@@ -44,18 +44,17 @@ const Login = () => {
   return (
 
     <div className='d-flex justify-content-center divForm'>
-      <div className="row w-25 p-5 borde">
-        <div className="d-flex justify-content-center mb-2">
-          <h1 className="text-center">Iniciar Sesion</h1>
+      <div className="row w-25 p-4 shadow-sm rounded bg-white border">
+        <div className="d-flex justify-content-center mb-3">
+          <h1 className="text-center">Iniciar Sesión</h1>
         </div>
-        <input className="p-2 my-2" type="text" name="usuario" ref={usuario} onChange={verificarCampos} placeholder='Ingrese usuario'></input>
-        <input className="p-2 my-2" type="password" name="pass" ref={pass} onChange={verificarCampos} placeholder='Ingrese contraseña'></input>
-        <label htmlFor="botonlogin"></label>
-        <div className='d-flex mt-2 justify-content-center'>
-          <Link className="text-center mt-2 mx-2 boton" to="/">Atras</Link>
-          <input className="mt-2 mx-2 p-2" disabled={!botonLogin} type="button" value="Iniciar Sesion" onClick={loginUsuario} />
+        <input className="form-control p-2 my-2" type="text" name="usuario" ref={usuario} onChange={verificarCampos} placeholder='Ingrese usuario' />
+        <input className="form-control p-2 my-2" type="password" name="pass" ref={pass} onChange={verificarCampos} placeholder='Ingrese contraseña' />
+        <div className='d-flex mt-3 justify-content-center'>
+          <Link className="btn btn-secondary me-2" to="/">Atras</Link>
+          <input className="btn btn-primary" disabled={!botonLogin} type="button" value="Iniciar Sesión" onClick={loginUsuario} />
         </div>
-        {error ? <p className="text-center mt-5">{mensajeError}</p> : null}
+        {error ? <p className="text-center mt-3 text-danger">{mensajeError}</p> : null}
       </div>
     </div>
 
