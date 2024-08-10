@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { agregarEventoLocal } from '../../features/eventoSlice';
 import { useRef, useState } from 'react'
 
-
 const AgregarEvento = () => {
   const url = "https://babytracker.develotion.com/";
   const dispatch = useDispatch();
@@ -13,47 +12,64 @@ const AgregarEvento = () => {
   const categoriaEvento = useRef(null)
   const detalleEvento = useRef(null)
   const [mensaje, setMensaje] = useState('')
-  // Creo variable fecha para guardar la fecha si no fue ingresada
-  const[fecha, setFecha] = useState(new Date())
 
-  const verificarCampos = () => {
+  const formatearFecha = (fecha) => {
+    // Recibo una fecha para formatearla de manera correcta para la peticion
+    const fechaObj = new Date(fecha);
+    const año = fechaObj.getFullYear();
+    const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
+    const dia = String(fechaObj.getDate()).padStart(2, '0');
+    const hora = String(fechaObj.getHours()).padStart(2, '0');
+    const minuto = String(fechaObj.getMinutes()).padStart(2, '0');
+    const segundo = String(fechaObj.getSeconds()).padStart(2, '0');
+    // Devuelvo un string con la fecha
+    return `${año}-${mes}-${dia} ${hora}:${minuto}:${segundo}`;
+  };
+
+  const calcularFecha = () => {
+    // Verifico el nombre del evento
     if (nombreEvento.current.value.trim() === '') {
-      setMensaje('El nombre no puede ser vacio')
-      return false;
-    }    
-    // Verifico si existe la fecha
-    if (fechaEvento.current.value !== '') {
-      // Si existe comparo si es mayor que la de hoy
-      const fechaRecibida = new Date(fechaEvento.current.value)
-      const hoy = new Date()
-      if (fechaRecibida > hoy) {        
-        setMensaje('La fecha no puede ser posterior a la actual')
-        return false;
-      }
-      // Si no fue mayor a la de hoy pero si fue ingresada asigno los valores a la variable fecha
-      setFecha(`${fechaEvento.current.value} ${horaEvento.current.value}`) 
-    }else{
-      // Si la fecha no fue ingresada le asigno la fecha de hoy
-      const hoy = new Date()
-      const año = hoy.getFullYear()
-      const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // padStart agrega un 0 si el numero es menor a 10 para poder comparar con la fecha recibida por el evento
-      const dia = String(hoy.getDate()).padStart(2, '0');
-      const fechaGuardar = `${año}-${mes}-${dia} 00:00:00`
-      setFecha(fechaGuardar)
-      
+      setMensaje('El nombre no puede ser vacío');
+      return null;
     }
-    return true;
-  }
+    let fecha;
+    // Verifico si la fecha existe
+    if (!fechaEvento.current.value) {
+      // No se ingreso una fecha, ingresar la fecha actual
+      const hoy = new Date();
+      fecha = formatearFecha(hoy);
+    } else {
+      // Se ingreso una fecha
+      const fechaBase = fechaEvento.current.value;
+      const hora = horaEvento.current.value || '00:00:00';
+      fecha = `${fechaBase} ${hora}`;
+      fecha = formatearFecha(fecha);
+    }
+
+    // Verificar si la fecha es mayor que la fecha actual
+    const fechaIngresada = new Date(fecha);
+    const hoy = new Date();
+    // Setear las horas a 0 para comparar solo la fecha
+    hoy.setHours(0, 0, 0, 0); 
+    if (fechaIngresada > hoy) {
+      setMensaje('La fecha no puede ser mayor a la fecha de hoy');
+      return null;
+    }
+
+    return fecha;
+  };
+
   const agregarEvento = () => {
-    if (verificarCampos()) {      
-      const userId = localStorage.getItem('userId')
-      const apiKey = localStorage.getItem('apiKey')      
+    const fecha = calcularFecha();
+    if (fecha) {
+      const userId = localStorage.getItem('userId');
+      const apiKey = localStorage.getItem('apiKey');
       const evento = {
         "idCategoria": categoriaEvento.current.value,
         "idUsuario": userId,
         "detalle": detalleEvento.current.value,
-        "fecha": `${fecha}`,
-      }      
+        "fecha": fecha,
+      };      
       fetch(url + "/eventos.php", {
         method: "POST",
         headers: {
@@ -66,12 +82,12 @@ const AgregarEvento = () => {
         .then((r) => r.json())
         .then((data) => {
           if (data.codigo === 409) {
-            setMensaje(data.mensaje)            
+            setMensaje(data.mensaje);
           } else {
-            dispatch(agregarEventoLocal(evento))
-            setMensaje(data.mensaje)
+            dispatch(agregarEventoLocal(evento));
+            setMensaje(data.mensaje);
           }
-        })      
+        });
     }
   }
 
@@ -90,7 +106,7 @@ const AgregarEvento = () => {
             <option key={categoria.id} value={categoria.id}>{categoria.tipo}</option>
           ))}
         </select>
-        <input className='p-2 mt-2' type="textarea" placeholder="Descripcion del evento (opcional)" ref={detalleEvento} />
+        <input className='p-2 mt-2' type="textarea" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
         <input className="mt-2 p-1" name="boton" type="button" value="Crear evento" onClick={agregarEvento} />
         <p className="text-center mt-2">{mensaje}</p>
       </div>
@@ -98,6 +114,4 @@ const AgregarEvento = () => {
   )
 }
 
-
 export default AgregarEvento
-
