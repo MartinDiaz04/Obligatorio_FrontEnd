@@ -4,6 +4,7 @@ import ciudadReducer from "../features/ciudadSlice";
 import categoriaReducer from "../features/categoriaSlice";
 import plazaReducer from "../features/plazaSlice";
 import eventoReducer from  "../features/eventoSlice";
+import spinnerReducer from "../features/spinnerSlice";
 
 export const store = configureStore({
     reducer:{
@@ -12,5 +13,6 @@ export const store = configureStore({
         categoria: categoriaReducer,
         plaza: plazaReducer,
         evento: eventoReducer,
+        spinner: spinnerReducer,
     }
 })
