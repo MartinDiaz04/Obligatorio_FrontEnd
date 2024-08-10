@@ -10,6 +10,7 @@ const Evento = ({ id, idCategoria, detalle, fecha }) => {
     const urlImagen = "https://babytracker.develotion.com/imgs/" + img + ".png"
     const dispatch = useDispatch()
     const [mensaje, setMensaje] = useState('')
+
     const eliminarEvento = () => {
         fetch(url + "/eventos.php?idEvento=" + id, {
             method: "DELETE",
@@ -21,9 +22,9 @@ const Evento = ({ id, idCategoria, detalle, fecha }) => {
         })
             .then(r => r.json())
             .then(data => {
-                if (data.codigo === 404) {                    
-                    setMensaje(data.mensaje)                    
-                } else {                   
+                if (data.codigo === 404) {
+                    setMensaje(data.mensaje)
+                } else {
                     setMensaje(data.mensaje)
                     dispatch(eliminarEventoLocal(id))
                 }
@@ -31,19 +32,15 @@ const Evento = ({ id, idCategoria, detalle, fecha }) => {
     }
 
     return (
-        <div className="row d-flex justify-content-center w-25 mx-1 evento">
-            <div className='d-flex align-items-center'>
-                <img src={urlImagen} alt="imagen" />
-                <p className='text-center px-2 pt-3'>{tipoCategoria}</p>
+        <li className="evento-item d-flex align-items-center p-2 border rounded">
+            <img className="evento-imagen me-2" src={urlImagen} alt="Evento" />
+            <div className="evento-info d-flex flex-column">
+                <p className="evento-categoria mb-1">{tipoCategoria}</p>
+                <p className="evento-detalle mb-1">{detalle}</p>
+                <p className="evento-fecha text-muted">{fecha}</p>
             </div>
-            <div className='pt-3 text-center'>
-                <p>{detalle}</p>
-                <p>{fecha}</p>
-            </div>
-            <div className='pb-2 text-center'>
-                <input type='button' value='Eliminar' onClick={eliminarEvento} />
-            </div>          
-        </div>
+            <button className="btn btn-danger btn-sm ms-2" onClick={eliminarEvento}>Eliminar</button>
+        </li>
 
     )
 }
