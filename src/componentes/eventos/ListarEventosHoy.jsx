@@ -9,8 +9,6 @@ const ListarEventos = () => {
   const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // padStart agrega un 0 si el numero es menor a 10 para poder comparar con la fecha recibida por el evento
   const dia = String(hoy.getDate()).padStart(2, '0');
   const fecha = `${año}-${mes}-${dia}`
-  console.log(eventos.filter(e => e.fecha.split(' ')[0] == fecha))
-
   return (
     <div className="d-flex justify-content-center listaEventos">
       <div className="row w-50">
