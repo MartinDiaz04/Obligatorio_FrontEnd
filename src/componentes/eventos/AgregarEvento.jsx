@@ -30,12 +30,12 @@ const AgregarEvento = () => {
     if (!fechaEvento.current.value) {
       // Formateo fecha
       fechaFormateada = fecha.toISOString().split('T')[0];
-      // Si no existe hora agrego 00:00:00 a la fecha
-      if (!horaEvento.current.value) {
-        fechaFormateada = fechaFormateada + ' 00:00:00';
+      // Si no existe hora agrego la hora actual a la fecha
+      if (!horaEvento.current.value) {        
+        fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();
       } else {
         // Si existe hora la agrego a la fecha
-        fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value;
+        fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value + ':00';
       }
     } else {
       // Si existe fecha verifico que no sea mayor a la de hoy
@@ -45,12 +45,12 @@ const AgregarEvento = () => {
       } else {
         // En caso de que si exista fecha y no sea mayor a la de hoy formateo
         fechaFormateada = fechaEvento.current.value;
-        // Si no existe hora agrego 00:00:00 a la fecha
+        // Si no existe hora agrego la hora actual a la fecha
         if (!horaEvento.current.value) {
-          fechaFormateada = fechaFormateada + ' 00:00:00';
+          fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();          
         } else {
           // Si existe hora la agrego a la fecha
-          fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value;
+          fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value + ':00';
         }
       }
     }
@@ -82,8 +82,14 @@ const AgregarEvento = () => {
           if (data.codigo === 409) {
             setMensaje(data.mensaje);
           } else {
-            console.log(evento)
-            dispatch(agregarEventoLocal(evento));
+            const eventoEstado = {
+              id: data.idEvento,
+              idCategoria: categoriaEvento.current.value,
+              idUsuario: userId,
+              detalle: detalleEvento.current.value,
+              fecha: fecha,
+            }
+            dispatch(agregarEventoLocal(eventoEstado));            
             setMensaje(data.mensaje);
           }
         });
