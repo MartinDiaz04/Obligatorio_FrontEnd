@@ -11,15 +11,15 @@ const ListarEventos = () => {
   const fecha = `${año}-${mes}-${dia}`
   
   return (
-    <div className="d-flex justify-content-center listaEventos">
-      <div className="row w-50">
+    <div className="row d-flex justify-content-center listaEventos">
+      
         <h1 className="text-center">Eventos del dia de hoy</h1>
         {/* Le saco la hora para comprar solo el dia */}
         {eventos.filter(e => e.fecha.split(' ')[0] == fecha).map((e, i) => (
           <Evento key={i} {...e} />
         ))
         }
-      </div>
+
     </div>
   )
 }
