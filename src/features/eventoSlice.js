@@ -14,11 +14,11 @@ export const eventoSlice = createSlice({
         agregarEventoLocal: (state, action) => {            
             state.listaEventos.push(action.payload)
         },
-        eliminarEvento: (state, action) => {
+        eliminarEventoLocal: (state, action) => {            
             state.listaEventos = state.listaEventos.filter(evento => evento.id !== action.payload)
         },
     }   
 })
 
-export const {guardarEventos, agregarEventoLocal, eliminarEvento} = eventoSlice.actions
+export const {guardarEventos, agregarEventoLocal, eliminarEventoLocal} = eventoSlice.actions
 export default eventoSlice.reducer;
