@@ -13,55 +13,53 @@ const AgregarEvento = () => {
   const detalleEvento = useRef(null)
   const [mensaje, setMensaje] = useState('')
 
-  const formatearFecha = (fecha) => {
-    // Recibo una fecha para formatearla de manera correcta para la peticion
-    const fechaObj = new Date(fecha);
-    const año = fechaObj.getFullYear();
-    const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
-    const dia = String(fechaObj.getDate()).padStart(2, '0');
-    const hora = String(fechaObj.getHours()).padStart(2, '0');
-    const minuto = String(fechaObj.getMinutes()).padStart(2, '0');
-    const segundo = String(fechaObj.getSeconds()).padStart(2, '0');
-    // Devuelvo un string con la fecha
-    return `${año}-${mes}-${dia} ${hora}:${minuto}:${segundo}`;
-  };
+  const verificarDatos = () => {
+    if (!nombreEvento.current.value) {
+      setMensaje('Debe ingresar un nombre para el evento');
+      return false;
+    }
+    return true;
+  }
 
   const calcularFecha = () => {
-    // Verifico el nombre del evento
-    if (nombreEvento.current.value.trim() === '') {
-      setMensaje('El nombre no puede ser vacío');
-      return null;
-    }
-    
-    let fecha;
+    // Creo variable de fecha para ingresar
+    let fechaFormateada
+    // Creo la variable para la fecha de hoy
+    const fecha = new Date();
+    // Verifico existencia de fecha, si no existe
     if (!fechaEvento.current.value) {
-      // No se ingreso una fecha, ingresar la fecha actual
-      const hoy = new Date();
-      fecha = formatearFecha(hoy);
+      // Formateo fecha
+      fechaFormateada = fecha.toISOString().split('T')[0];
+      // Si no existe hora agrego 00:00:00 a la fecha
+      if (!horaEvento.current.value) {
+        fechaFormateada = fechaFormateada + ' 00:00:00';
+      } else {
+        // Si existe hora la agrego a la fecha
+        fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value;
+      }
     } else {
-      // Se ingreso una fecha
-      const fechaBase = fechaEvento.current.value;
-      const hora = horaEvento.current.value || '00:00:00';
-      fecha = `${fechaBase} ${hora}`;
-      fecha = formatearFecha(fecha);
+      // Si existe fecha verifico que no sea mayor a la de hoy
+      if (fechaEvento.current.value > fecha.toISOString().split('T')[0]) {
+        setMensaje('La fecha no puede ser mayor a la de hoy');
+        return;
+      } else {
+        // En caso de que si exista fecha y no sea mayor a la de hoy formateo
+        fechaFormateada = fechaEvento.current.value;
+        // Si no existe hora agrego 00:00:00 a la fecha
+        if (!horaEvento.current.value) {
+          fechaFormateada = fechaFormateada + ' 00:00:00';
+        } else {
+          // Si existe hora la agrego a la fecha
+          fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value;
+        }
+      }
     }
-
-    // Verificar si la fecha es mayor que la fecha actual
-    const fechaIngresada = new Date(fecha);
-    const hoy = new Date();
-    // Setear las horas a 0 para comparar solo la fecha
-    hoy.setHours(0, 0, 0, 0); 
-    if (fechaIngresada > hoy) {
-      setMensaje('La fecha no puede ser mayor a la fecha de hoy');
-      return null;
-    }
-
-    return fecha;
-  };
+    return fechaFormateada;
+  }
 
   const agregarEvento = () => {
     const fecha = calcularFecha();
-    if (fecha) {
+    if (verificarDatos() && fecha) {
       const userId = localStorage.getItem('userId');
       const apiKey = localStorage.getItem('apiKey');
       const evento = {
@@ -84,6 +82,7 @@ const AgregarEvento = () => {
           if (data.codigo === 409) {
             setMensaje(data.mensaje);
           } else {
+            console.log(evento)
             dispatch(agregarEventoLocal(evento));
             setMensaje(data.mensaje);
           }
