@@ -50,11 +50,13 @@ const BiberonesConsumidos = () => {
 
 
     return (
-        <div>
-            <h3>Biberones consumidos hoy:</h3>
-            <p>{contador}</p>
-            <h3>Ultimo biberón consumido hace:</h3>
-            <p>{cronometro}</p>
+        <div className="card shadow-sm mb-4">
+            <div className="card-body text-center">
+                <h3 className="card-title mb-3">Biberones consumidos hoy:</h3>
+                <p className="display-4 mb-3">{contador}</p>
+                <h3 className="card-title mb-3">Último biberón consumido hace:</h3>
+                <p className="h5 font-weight-bold text-muted">{cronometro}</p>
+            </div>
         </div>
     )
 }
