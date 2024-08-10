@@ -46,7 +46,7 @@ const Registro = () => {
   };
 
   const registrarUsuario = () => {
-    if (verificarUsuario()) {         
+    if (verificarUsuario()) {
       fetch(url + "/usuarios.php", {
         method: "POST",
         headers: {
@@ -69,7 +69,7 @@ const Registro = () => {
             navigate("/dashboard");
           }
         })
-    }else{
+    } else {
       setError(true);
       setMensajeError("Debe completar todos los campos")
     }
@@ -78,24 +78,33 @@ const Registro = () => {
 
   return (
     <div className='d-flex justify-content-center divForm'>
-      <div className="row w-25 p-5 borde" >
-        <div className="d-flex justify-content-center mb-2">
+      <div className="row w-25 p-4 border rounded shadow bg-light">
+        <div className="d-flex justify-content-center mb-3">
           <h1 className="text-center">Registro</h1>
         </div>
-        <input className="p-2 my-2" type="text" name="usuario" ref={usuario} placeholder="Ingrese usuario"></input>
-        <input className="p-2 my-2" type="password" name="pass" ref={pass} placeholder="Ingrese contraseña"></input>
-        <label className="text-center mt-2" htmlFor="departamento">Seleccione departamento:</label>
-        <select className="text-center p-2" onChange={obtenerCiudades} ref={departamentoActual} name="departamentos">{departamentos.map(departamento => (<option key={departamento.id} value={departamento.id}>{departamento.nombre}
-        </option>))}
+        <input className="form-control p-2 my-2" type="text" name="usuario" ref={usuario} placeholder="Ingrese usuario" />
+        <input className="form-control p-2 my-2" type="password" name="pass" ref={pass} placeholder="Ingrese contraseña" />
+        <label className="form-label mt-3" htmlFor="departamento">Seleccione departamento:</label>
+        <select className="form-select p-2" onChange={obtenerCiudades} ref={departamentoActual} name="departamentos">
+          {departamentos.map(departamento => (
+            <option key={departamento.id} value={departamento.id}>
+              {departamento.nombre}
+            </option>
+          ))}
         </select>
-        <label className="text-center mt-2" htmlFor="ciudades">Seleccione ciudad:</label>
-        <select className="text-center p-2" name="ciudades" ref={ciudad}>{ciudades.map((ciudad) => (<option key={ciudad.id} value={ciudad.id}> {ciudad.nombre}</option>))}</select>
-        <label htmlFor="boton"></label>
-        <div className='d-flex mt-5 justify-content-center'>
-          <Link className="text-center mt-2 mx-2 boton" to="/">Atras</Link>
-          <input className="mt-2 mx-2 p-2" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
+        <label className="form-label mt-3" htmlFor="ciudades">Seleccione ciudad:</label>
+        <select className="form-select p-2" name="ciudades" >
+          {ciudades.map(ciudad => (
+            <option key={ciudad.id} value={ciudad.id}>
+              {ciudad.nombre}
+            </option>
+          ))}
+        </select>
+        <div className='d-flex mt-4 justify-content-center'>
+          <Link className="btn btn-secondary me-2" to="/">Atras</Link>
+          <input className="btn btn-primary" name="boton" type="button" value="Registrar" onClick={registrarUsuario} />
         </div>
-        {error ? <p className="text-center mt-2">{mensajeError}</p> : null}
+        {error && <p className="text-center mt-3 text-danger">{mensajeError}</p>}
       </div>
     </div>
 
