@@ -32,8 +32,8 @@ const AgregarEvento = () => {
       setMensaje('El nombre no puede ser vacío');
       return null;
     }
+    
     let fecha;
-    // Verifico si la fecha existe
     if (!fechaEvento.current.value) {
       // No se ingreso una fecha, ingresar la fecha actual
       const hoy = new Date();
@@ -69,7 +69,7 @@ const AgregarEvento = () => {
         "idUsuario": userId,
         "detalle": detalleEvento.current.value,
         "fecha": fecha,
-      };      
+      };
       fetch(url + "/eventos.php", {
         method: "POST",
         headers: {
