@@ -31,7 +31,7 @@ const AgregarEvento = () => {
       // Formateo fecha
       fechaFormateada = fecha.toISOString().split('T')[0];
       // Si no existe hora agrego la hora actual a la fecha
-      if (!horaEvento.current.value) {        
+      if (!horaEvento.current.value) {
         fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();
       } else {
         // Si existe hora la agrego a la fecha
@@ -47,7 +47,7 @@ const AgregarEvento = () => {
         fechaFormateada = fechaEvento.current.value;
         // Si no existe hora agrego la hora actual a la fecha
         if (!horaEvento.current.value) {
-          fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();          
+          fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();
         } else {
           // Si existe hora la agrego a la fecha
           fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value + ':00';
@@ -89,7 +89,7 @@ const AgregarEvento = () => {
               detalle: detalleEvento.current.value,
               fecha: fecha,
             }
-            dispatch(agregarEventoLocal(eventoEstado));            
+            dispatch(agregarEventoLocal(eventoEstado));
             setMensaje(data.mensaje);
           }
         });
@@ -97,24 +97,32 @@ const AgregarEvento = () => {
   }
 
   return (
-    <div className='d-flex justify-content-center'>
-      <div className="row w-50 p-5">
-        <h1>Agregar Evento</h1>
-        <input className='p-2' type="text" placeholder="Nombre del evento" ref={nombreEvento} />
+    <div className="agregar-evento-container mt-3">
+      <h1>Agregar Evento</h1>
+      <div className="form-group">
+        <input className="form-control" type="text" placeholder="Nombre del evento" ref={nombreEvento} />
+      </div>
+      <div className="form-group">
         <label htmlFor="fecha">Seleccione fecha:</label>
-        <input className='p-2' name='fecha' type="date" ref={fechaEvento} />
+        <input className="form-control" name="fecha" type="date" ref={fechaEvento} />
+      </div>
+      <div className="form-group">
         <label htmlFor="hora">Seleccione hora:</label>
-        <input className='p-2' name='hora' type="time" ref={horaEvento} />
-        <label htmlFor="categoria">Seleccione categoria:</label>
-        <select className='p-2' name='categoria' ref={categoriaEvento}>
+        <input className="form-control" name="hora" type="time" ref={horaEvento} />
+      </div>
+      <div className="form-group">
+        <label htmlFor="categoria">Seleccione categoría:</label>
+        <select className="form-control" name="categoria" ref={categoriaEvento}>
           {categorias.map(categoria => (
             <option key={categoria.id} value={categoria.id}>{categoria.tipo}</option>
           ))}
         </select>
-        <input className='p-2 mt-2' type="textarea" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
-        <input className="mt-2 p-1" name="boton" type="button" value="Crear evento" onClick={agregarEvento} />
-        <p className="text-center mt-2">{mensaje}</p>
       </div>
+      <div className="form-group">
+        <input className="form-control" type="text" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
+      </div>
+      <button className="btn btn-primary" onClick={agregarEvento}>Crear evento</button>
+      {mensaje && <p className="text-center text-success mt-2">{mensaje}</p>}
     </div>
   )
 }
