@@ -83,3 +83,12 @@
 .listaEventos{
   border: 1px solid black;
 }
+
+.evento{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+}
