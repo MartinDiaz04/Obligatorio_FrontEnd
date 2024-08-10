@@ -4,15 +4,25 @@ import { useSelector } from 'react-redux'
 const Evento = ({ detalle, idCategoria, fecha }) => {
     const url = "https://babytracker.develotion.com/imgs/"
     const fechaReducida = fecha.split(' ')[0]
-    const categorias = useSelector(state => state.categoria.listaCategorias)    
+    const categorias = useSelector(state => state.categoria.listaCategorias)
     const img = categorias.filter(categoria => categoria.id == idCategoria)[0].imagen
+    const tipoCategoria = categorias.filter(categoria => categoria.id == idCategoria)[0].tipo
     const urlImagen = url + img + ".png"
-    
+
     return (
-        <div className="row d-flex justify-content-center align-items-center evento">
-            <img src={urlImagen} alt="imagen" />                        
-            <p>{fechaReducida}</p>
-            <p>{detalle}</p>
+        <div className="row d-flex justify-content-center w-25 mx-5 evento">
+            <div className='d-flex align-items-center'>
+                <img src={urlImagen} alt="imagen" />
+                <p className='text-center px-2 pt-2'>{tipoCategoria}</p>
+            </div>
+            <div className='pt-3'>
+                <p>{detalle}</p>
+                <p>{fechaReducida}</p>
+            </div>
+            <div className='pb-2'>
+                <button>Eliminar</button>
+            </div>
+
         </div>
     )
 }
