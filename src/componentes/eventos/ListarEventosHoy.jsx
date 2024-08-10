@@ -6,15 +6,15 @@ const ListarEventos = () => {
   const eventos = useSelector(state => state.evento.listaEventos)
   const hoy = new Date()
   return (
-    <div className="row d-flex justify-content-center listaEventos">
-      
-        <h1 className="text-center">Eventos del dia de hoy</h1>
-        {/* Le saco la hora para comprar solo el dia */}
-        {eventos.filter(e => e.fecha.split(' ')[0] == hoy.toISOString().split('T')[0]).map(e => (
-          <Evento key={e.id} {...e} />
-        ))
-        }
-
+    <div className="lista-eventos mt-3 container">
+      <h3 className="text-center mb-4">Eventos del día de hoy</h3>
+      <ul className="list-unstyled">
+        {eventos
+          .filter(e => e.fecha.split(' ')[0] === hoy.toISOString().split('T')[0])
+          .map(e => (
+            <Evento key={e.id} {...e} />
+          ))}
+      </ul>
     </div>
 
   )
