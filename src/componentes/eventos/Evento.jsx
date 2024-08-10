@@ -41,7 +41,6 @@ const Evento = ({ id, idCategoria, detalle, fecha }) => {
             </div>
             <button className="btn btn-danger btn-sm ms-2" onClick={eliminarEvento}>Eliminar</button>
         </li>
-
     )
 }
 
