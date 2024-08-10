@@ -6,6 +6,7 @@ const BiberonesConsumidos = () => {
     const [horaUltimoBiberonHoy, setHoraUltimoBiberonHoy] = useState('')
     const [cronometro, setCronometro] = useState('')
     let contador = 0;
+
     // Calcular cuantos biberones fueron tomados el dia de hoy
     eventos.map(e => {
         if (e.idCategoria == 35 && e.fecha.split(' ')[0] === new Date().toISOString().split('T')[0]) {
@@ -14,6 +15,9 @@ const BiberonesConsumidos = () => {
     })
 
     useEffect(() => {
+        if (contador == 0) {
+            setCronometro(`No se ha registrado ningún biberón hoy`)
+        }
         // Calcular a que hora fue el ultimo biberon para hacer el cronometro
         if (contador > 0) {
 
@@ -31,7 +35,6 @@ const BiberonesConsumidos = () => {
             calcularCronometro()
         } else {
             setHoraUltimoBiberonHoy('')
-            setCronometro(0)
         }
     }, [eventos])
 
