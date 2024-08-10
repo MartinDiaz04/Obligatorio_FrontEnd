@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { agregarEventoLocal } from '../../features/eventoSlice';
 import { useRef, useState } from 'react'
+import { spinnerCargando } from '../../features/spinnerSlice';
+import Spinner from '../Spinner';
 
 const AgregarEvento = () => {
   const url = "https://babytracker.develotion.com/";
@@ -20,6 +22,8 @@ const AgregarEvento = () => {
     }
     return true;
   }
+
+  const eventoCargando = useSelector(state => state.spinner.loading)
 
   const calcularFecha = () => {
     // Creo variable de fecha para ingresar
@@ -57,9 +61,10 @@ const AgregarEvento = () => {
     return fechaFormateada;
   }
 
-  const agregarEvento = () => {
+  const agregarEvento = () => {    
     const fecha = calcularFecha();
     if (verificarDatos() && fecha) {
+      dispatch(spinnerCargando(true))
       const userId = localStorage.getItem('userId');
       const apiKey = localStorage.getItem('apiKey');
       const evento = {
@@ -92,7 +97,12 @@ const AgregarEvento = () => {
             dispatch(agregarEventoLocal(eventoEstado));
             setMensaje(data.mensaje);
           }
-        });
+          dispatch(spinnerCargando(false))
+        })
+        .catch((error) => {
+          setMensaje('Error en la conexión con el servidor');
+          dispatch(spinnerCargando(false))
+        })
     }
   }
 
@@ -122,7 +132,8 @@ const AgregarEvento = () => {
         <input className="form-control" type="text" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
       </div>
       <button className="btn btn-primary" onClick={agregarEvento}>Crear evento</button>
-      {mensaje && <p className="text-center text-success mt-2">{mensaje}</p>}
+      {mensaje && <p className="text-center mt-2">{mensaje}</p>}
+      {eventoCargando ? <Spinner /> : null}
     </div>
   )
 }
