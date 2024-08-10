@@ -9,10 +9,10 @@ const Evento = ({ detalle, idCategoria, fecha }) => {
     const urlImagen = url + img + ".png"
     
     return (
-        <div className="row d-flex justify-content-center align-items-center">
+        <div className="row d-flex justify-content-center align-items-center evento">
             <img src={urlImagen} alt="imagen" />                        
             <p>{fechaReducida}</p>
-            <h1>{detalle}</h1>
+            <p>{detalle}</p>
         </div>
     )
 }
