@@ -1,9 +1,12 @@
 import React from 'react'
 import { useRef, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { spinnerCargando } from '../features/spinnerSlice'
+import Spinner from './Spinner'
 
 const Login = () => {
+  const dispatch = useDispatch()
   const url = "https://babytracker.develotion.com/";
   const usuario = useRef(null)
   const pass = useRef(null)
@@ -15,8 +18,11 @@ const Login = () => {
   const verificarCampos = () => {
     usuario.current.value && pass.current.value ? setBotonLogin(true) : setBotonLogin(false)
   }
+  const usuarioCarga = useSelector(state => state.spinner.loading)
+
 
   const loginUsuario = () => {
+    dispatch(spinnerCargando(true))
     fetch(url + "/login.php", {
       method: "POST",
       headers: {
@@ -37,7 +43,11 @@ const Login = () => {
           localStorage.setItem("userId", data.id);
           navigate("/dashboard")
         }
-
+        dispatch(spinnerCargando(false))
+      }).catch((error) => {
+        dispatch(spinnerCargando(false))
+        setError(true)
+        setMensajeError("Error en la conexión con el servidor")
       })
   }
 
@@ -55,6 +65,7 @@ const Login = () => {
           <input className="btn btn-primary" disabled={!botonLogin} type="button" value="Iniciar Sesión" onClick={loginUsuario} />
         </div>
         {error ? <p className="text-center mt-3 text-danger">{mensajeError}</p> : null}
+        {usuarioCarga ? <Spinner/> : null}
       </div>
     </div>
 
