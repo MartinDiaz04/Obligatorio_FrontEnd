@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { guardarCategorias } from "../features/categoriaSlice";
-import { guardarPlazas } from "../features/plazaSlice";
 import { guardarEventos } from "../features/eventoSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +10,7 @@ import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
 import PañalesCambiados from "./eventos/PañalesCambiados";
 import CantCategorias from "./graficas/CantCategorias";
 import CantComidas from "./graficas/CantComidas";
+import TiempoParaBiberon from "./TiempoParaBiberon";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -18,6 +18,7 @@ const Dashboard = () => {
   const apikey = localStorage.getItem("apiKey")
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const eventos = useSelector(state => state.evento.listaEventos)
   // useEffect para cargar plazas, eventos y categorias en los estados
   useEffect(() => {
     if (localStorage.getItem("userId") === null || localStorage.getItem("apiKey") === null) {
@@ -33,7 +34,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {                    
+        .then((data) => {
           dispatch(guardarEventos(data.eventos))
         })
       // Guardo categorias
@@ -49,22 +50,9 @@ const Dashboard = () => {
         .then((data) => {
           dispatch(guardarCategorias(data.categorias))
         })
-      // Guardo plazas
-      fetch(url + "/plazas.php", {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-          "apikey": apikey,
-          "iduser": userId
-        },
-      })
-        .then((r) => r.json())
-        .then((data) => {
-          dispatch(guardarPlazas(data.plazas))
-        })
     }
-
   }, [])
+
 
 
   return (
@@ -94,6 +82,12 @@ const Dashboard = () => {
           <CantComidas />
         </div>
       </div>
+      <div className="row mb-4 justify-content-center">
+        <div className="col-6 d-flex justify-content-center">
+          <TiempoParaBiberon />
+        </div>
+      </div>
+
     </div>
   )
 }
