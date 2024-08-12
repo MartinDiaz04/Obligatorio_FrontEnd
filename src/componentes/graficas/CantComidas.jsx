@@ -60,14 +60,14 @@ const CantCategorias = () => {
                             },
                             title: {
                                 display: true,
-                                text: 'Categorias',
+                                text: 'Comidas',
                             },
                         },
                     }} data={{
                         labels: eventosPorDia.map(e => e.fecha),
                         datasets: [
                             {
-                                label: 'Cantidad de eventos por categoria',
+                                label: 'Cantidad de comidas por dia',
                                 data: eventosPorDia.map(e => e.cantidad),
                                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
                             }
