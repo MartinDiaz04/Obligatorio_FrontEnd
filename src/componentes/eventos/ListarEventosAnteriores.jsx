@@ -7,7 +7,7 @@ const ListarEventos = () => {
   const hoy = new Date()
   return (
     <div className="lista-eventos mt-3 container">
-      <h3 className="text-center mb-4">Eventos del día de hoy</h3>
+      <h3 className="text-center mb-4">Eventos anteriores a hoy</h3>
       <ul className="list-unstyled">
         {eventos
           .filter(e => e.fecha.split(' ')[0] < hoy.toISOString().split('T')[0])

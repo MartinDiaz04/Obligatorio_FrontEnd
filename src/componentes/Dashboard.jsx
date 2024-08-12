@@ -9,6 +9,8 @@ import ListarEventosHoy from "./eventos/ListarEventosHoy";
 import ListarEventosAnteriores from "./eventos/ListarEventosAnteriores";
 import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
 import PañalesCambiados from "./eventos/PañalesCambiados";
+import CantCategorias from "./graficas/CantCategorias";
+import CantComidas from "./graficas/CantComidas";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -31,7 +33,7 @@ const Dashboard = () => {
         },
       })
         .then((r) => r.json())
-        .then((data) => {
+        .then((data) => {                    
           dispatch(guardarEventos(data.eventos))
         })
       // Guardo categorias
@@ -84,6 +86,12 @@ const Dashboard = () => {
         </div>
         <div className="col-6 d-flex justify-content-center">
           <PañalesCambiados />
+        </div>
+        <div className="col-6 d-flex justify-content-center">
+          <CantCategorias />
+        </div>
+        <div className="col-6 d-flex justify-content-center">
+          <CantComidas />
         </div>
       </div>
     </div>

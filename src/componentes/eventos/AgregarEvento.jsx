@@ -8,20 +8,12 @@ const AgregarEvento = () => {
   const url = "https://babytracker.develotion.com/";
   const dispatch = useDispatch();
   const categorias = useSelector(state => state.categoria.listaCategorias)
-  const nombreEvento = useRef(null)
   const fechaEvento = useRef(null)
   const horaEvento = useRef(null)
   const categoriaEvento = useRef(null)
   const detalleEvento = useRef(null)
   const [mensaje, setMensaje] = useState('')
 
-  const verificarDatos = () => {
-    if (!nombreEvento.current.value) {
-      setMensaje('Debe ingresar un nombre para el evento');
-      return false;
-    }
-    return true;
-  }
 
   const eventoCargando = useSelector(state => state.spinner.loading)
 
@@ -63,7 +55,7 @@ const AgregarEvento = () => {
 
   const agregarEvento = () => {    
     const fecha = calcularFecha();
-    if (verificarDatos() && fecha) {
+    if (fecha) {
       dispatch(spinnerCargando(true))
       const userId = localStorage.getItem('userId');
       const apiKey = localStorage.getItem('apiKey');
@@ -93,7 +85,7 @@ const AgregarEvento = () => {
               idUsuario: userId,
               detalle: detalleEvento.current.value,
               fecha: fecha,
-            }
+            }            
             dispatch(agregarEventoLocal(eventoEstado));
             setMensaje(data.mensaje);
           }
@@ -110,7 +102,12 @@ const AgregarEvento = () => {
     <div className="agregar-evento-container mt-3">
       <h1>Agregar Evento</h1>
       <div className="form-group">
-        <input className="form-control" type="text" placeholder="Nombre del evento" ref={nombreEvento} />
+        <label htmlFor="categoria">Seleccione categoría:</label>
+        <select className="form-control" name="categoria" ref={categoriaEvento}>
+          {categorias.map(categoria => (
+            <option key={categoria.id} value={categoria.id}>{categoria.tipo}</option>
+          ))}
+        </select>
       </div>
       <div className="form-group">
         <label htmlFor="fecha">Seleccione fecha:</label>
@@ -119,15 +116,7 @@ const AgregarEvento = () => {
       <div className="form-group">
         <label htmlFor="hora">Seleccione hora:</label>
         <input className="form-control" name="hora" type="time" ref={horaEvento} />
-      </div>
-      <div className="form-group">
-        <label htmlFor="categoria">Seleccione categoría:</label>
-        <select className="form-control" name="categoria" ref={categoriaEvento}>
-          {categorias.map(categoria => (
-            <option key={categoria.id} value={categoria.id}>{categoria.tipo}</option>
-          ))}
-        </select>
-      </div>
+      </div>      
       <div className="form-group">
         <input className="form-control" type="text" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
       </div>

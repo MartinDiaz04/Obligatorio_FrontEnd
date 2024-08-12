@@ -5,12 +5,17 @@ import { eliminarEventoLocal } from '../../features/eventoSlice'
 const Evento = ({ id, idCategoria, detalle, fecha }) => {
     const url = "https://babytracker.develotion.com/"
     const categorias = useSelector(state => state.categoria.listaCategorias)
-    const img = categorias.filter(c => c.id == idCategoria)[0].imagen
-    const tipoCategoria = categorias.filter(c => c.id == idCategoria)[0].tipo
-    const urlImagen = "https://babytracker.develotion.com/imgs/" + img + ".png"
-    const dispatch = useDispatch()
     const [mensaje, setMensaje] = useState('')
+    const dispatch = useDispatch()
+    
+    
+    // Obtengo la categoria de esta manera, porque cuando renderizan a la vez los componentes, las categorias no estan cargadas    
+    const categoria = categorias.find(c => c.id == idCategoria)
+    const img = categoria ? categoria.imagen : null
+    const tipoCategoria = categoria ? categoria.tipo : "Sin categoria"
+    const urlImagen = img ? "https://babytracker.develotion.com/imgs/" + img + ".png" : null
 
+    
     const eliminarEvento = () => {
         fetch(url + "/eventos.php?idEvento=" + id, {
             method: "DELETE",
