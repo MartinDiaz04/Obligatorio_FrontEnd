@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
+import { guardarHora } from "../../features/horaUltimoBiberonSlice"
+
 
 const BiberonesConsumidos = () => {
     const eventos = useSelector(state => state.evento.listaEventos)
-    const [horaUltimoBiberonHoy, setHoraUltimoBiberonHoy] = useState('')
     const [cronometro, setCronometro] = useState('')
-
-
+    const dispatch = useDispatch()
+    const horaUltimoBiberonHoy = useSelector(state => state.biberonHora.ultimoBiberon)
     useEffect(() => {
         let contador = 0;
         // Calcular cuantos biberones fueron tomados el dia de hoy
@@ -29,32 +30,40 @@ const BiberonesConsumidos = () => {
 
             // Obtengo la hora del ultimo biberon consumido
             let horaUltimoBiberon = ultimoEvento.fecha.split(' ')[1]
-            setHoraUltimoBiberonHoy(horaUltimoBiberon)
-            calcularCronometro() 
+            dispatch(guardarHora(horaUltimoBiberon))
+            calcularCronometro()
         } else {
-            setHoraUltimoBiberonHoy(null)
+            dispatch(guardarHora(null))
         }
     }, [eventos])
 
-    const calcularCronometro = () => {        
-        if (horaUltimoBiberonHoy != null) {            
+    const calcularCronometro = () => {
+        if (horaUltimoBiberonHoy != null) {
             const fechaActual = new Date()
             // Le resto 3 horas a la hora actual para que coincida con la hora de aca
             const fechaActualizada = new Date(fechaActual.getTime() - (3 * 60 * 60 * 1000))
             const horaModificada = fechaActualizada.toISOString().split('T')[1].split('.')[0]
 
-            const diferenciaHoras = horaModificada.split(':')[0] - horaUltimoBiberonHoy.split(':')[0]
-            const diferenciaMinutos = horaModificada.split(':')[1] - horaUltimoBiberonHoy.split(':')[1]
+            let diferenciaHoras = horaModificada.split(':')[0] - horaUltimoBiberonHoy.split(':')[0]
+            let diferenciaMinutos = horaModificada.split(':')[1] - horaUltimoBiberonHoy.split(':')[1]
+
+            // Ajusto los minutos si la resta da negativo
+            if (diferenciaMinutos < 0) {
+                diferenciaHoras -= 1;
+                diferenciaMinutos += 60;
+            }
+
+            // Ajusto las horas por si el evento es del dia anterior
+            if (diferenciaHoras < 0) {
+                diferenciaHoras += 24;
+            }
             const diferenciaTotal = `${diferenciaHoras} hora/s ${diferenciaMinutos} minuto/s`
             setCronometro(diferenciaTotal)
-        }else{            
+        } else {
             setCronometro(`0 hora/s 0 minuto/s`)
         }
-        
+
     }
-
-
-
 
     return (
         <div className="card shadow-sm mb-4">
