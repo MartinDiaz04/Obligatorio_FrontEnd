@@ -13,9 +13,9 @@ const AgregarEvento = () => {
   const categoriaEvento = useRef(null)
   const detalleEvento = useRef(null)
   const [mensaje, setMensaje] = useState('')
+  const [spinnerCarga, setSpinnerCarga] = useState(false)
 
 
-  const eventoCargando = useSelector(state => state.spinner.loading)
 
   const calcularFecha = () => {
     // Creo variable de fecha para ingresar
@@ -56,7 +56,7 @@ const AgregarEvento = () => {
   const agregarEvento = () => {    
     const fecha = calcularFecha();
     if (fecha) {
-      dispatch(spinnerCargando(true))
+      setSpinnerCarga(true)
       const userId = localStorage.getItem('userId');
       const apiKey = localStorage.getItem('apiKey');
       const evento = {
@@ -89,11 +89,11 @@ const AgregarEvento = () => {
             dispatch(agregarEventoLocal(eventoEstado));
             setMensaje(data.mensaje);
           }
-          dispatch(spinnerCargando(false))
+          setSpinnerCarga(false)
         })
         .catch((error) => {
           setMensaje('Error en la conexión con el servidor');
-          dispatch(spinnerCargando(false))
+          setSpinnerCarga(false)
         })
     }
   }
@@ -120,9 +120,9 @@ const AgregarEvento = () => {
       <div className="form-group">
         <input className="form-control" type="text" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
       </div>
-      <button className="btn btn-primary" onClick={agregarEvento}>Crear evento</button>
-      {mensaje && <p className="text-center mt-2">{mensaje}</p>}
-      {eventoCargando ? <Spinner /> : null}
+      <button className="btn btn-primary mb-4" onClick={agregarEvento}>Crear evento</button>
+      {mensaje && <p className="text-center">{mensaje}</p>}
+      {spinnerCarga ? <Spinner /> : null}
     </div>
   )
 }
