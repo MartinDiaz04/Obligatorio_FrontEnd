@@ -16,6 +16,34 @@ const BiberonesConsumidos = () => {
                 contador++
             }
         })
+        const calcularCronometro = () => {
+            if (horaUltimoBiberonHoy != null) {
+                const fechaActual = new Date()
+                // Le resto 3 horas a la hora actual para que coincida con la hora de aca
+                const fechaActualizada = new Date(fechaActual.getTime() - (3 * 60 * 60 * 1000))
+                const horaModificada = fechaActualizada.toISOString().split('T')[1].split('.')[0]
+
+                let diferenciaHoras = horaModificada.split(':')[0] - horaUltimoBiberonHoy.split(':')[0]
+                let diferenciaMinutos = horaModificada.split(':')[1] - horaUltimoBiberonHoy.split(':')[1]
+
+                // Ajusto los minutos si la resta da negativo
+                if (diferenciaMinutos < 0) {
+                    diferenciaHoras -= 1;
+                    diferenciaMinutos += 60;
+                }
+
+                // Ajusto las horas por si el evento es del dia anterior
+                if (diferenciaHoras < 0) {
+                    diferenciaHoras += 24;
+                }
+                const diferenciaTotal = `${diferenciaHoras} hora/s ${diferenciaMinutos} minuto/s`
+                setCronometro(diferenciaTotal)
+                console.log("entro")
+            } else {
+                setCronometro(`0 hora/s 0 minuto/s`)
+            }
+
+        }
         if (contador == 0) {
             setCronometro(`No se ha registrado ningún biberón hoy`)
         }
@@ -35,35 +63,14 @@ const BiberonesConsumidos = () => {
         } else {
             dispatch(guardarHora(null))
         }
-    }, [eventos])
 
-    const calcularCronometro = () => {
-        if (horaUltimoBiberonHoy != null) {
-            const fechaActual = new Date()
-            // Le resto 3 horas a la hora actual para que coincida con la hora de aca
-            const fechaActualizada = new Date(fechaActual.getTime() - (3 * 60 * 60 * 1000))
-            const horaModificada = fechaActualizada.toISOString().split('T')[1].split('.')[0]
 
-            let diferenciaHoras = horaModificada.split(':')[0] - horaUltimoBiberonHoy.split(':')[0]
-            let diferenciaMinutos = horaModificada.split(':')[1] - horaUltimoBiberonHoy.split(':')[1]
 
-            // Ajusto los minutos si la resta da negativo
-            if (diferenciaMinutos < 0) {
-                diferenciaHoras -= 1;
-                diferenciaMinutos += 60;
-            }
 
-            // Ajusto las horas por si el evento es del dia anterior
-            if (diferenciaHoras < 0) {
-                diferenciaHoras += 24;
-            }
-            const diferenciaTotal = `${diferenciaHoras} hora/s ${diferenciaMinutos} minuto/s`
-            setCronometro(diferenciaTotal)
-        } else {
-            setCronometro(`0 hora/s 0 minuto/s`)
-        }
 
-    }
+    }, [eventos], [horaUltimoBiberonHoy])
+
+
 
     return (
         <div className="card shadow-sm mb-4">
