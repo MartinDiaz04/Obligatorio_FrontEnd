@@ -61,8 +61,8 @@ const Login = () => {
         <input className="form-control p-2 my-2" type="text" name="usuario" ref={usuario} onChange={verificarCampos} placeholder='Ingrese usuario' />
         <input className="form-control p-2 my-2" type="password" name="pass" ref={pass} onChange={verificarCampos} placeholder='Ingrese contraseña' />
         <div className='d-flex mt-3 justify-content-center'>
-          <Link className="btn btn-secondary me-2" to="/">Atras</Link>
-          <input className="btn btn-primary" disabled={!botonLogin} type="button" value="Iniciar Sesión" onClick={loginUsuario} />
+          <Link className="btn btn-secondary me-2 mb-4" to="/">Atras</Link>
+          <input className="btn btn-primary mb-4" disabled={!botonLogin} type="button" value="Iniciar Sesión" onClick={loginUsuario} />
         </div>
         {error ? <p className="text-center mt-3 text-danger">{mensajeError}</p> : null}
         {usuarioCarga ? <Spinner/> : null}
