@@ -80,8 +80,7 @@ const AgregarEvento = () => {
         .then((data) => {
           if (data.codigo === 409) {
             setMensaje(data.mensaje);
-          } else {
-            console.log(data.idEvento)
+          } else {            
             const eventoEstado = {
               id: data.idEvento,
               idCategoria: Number(categoriaEvento.current.value),
