@@ -2,22 +2,30 @@ import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import Evento from "./Evento"
 
-const ListarEventos = () => {
+const ListarEventosAnteriores = () => {
   const eventos = useSelector(state => state.evento.listaEventos)
-  const hoy = new Date()
+  const [fechaHoy, setFechaHoy] = useState("")
+
+  useEffect(() => {
+    const hoy = new Date()
+    // Formatea un número a dos dígitos, añadiendo un 0 al inicio si es necesario para corregir los dias y los meses
+    const pad = (num) => num.toString().padStart(2, '0')
+    const fechaLocal = `${hoy.getFullYear()}-${pad(hoy.getMonth() + 1)}-${pad(hoy.getDate())}`
+    setFechaHoy(fechaLocal)
+  }, [])
+
   return (
     <div className="lista-eventos mt-3 container">
       <h3 className="text-center mb-4">Eventos anteriores a hoy</h3>
       <ul className="list-unstyled">
         {eventos
-          .filter(e => e.fecha.split(' ')[0] < hoy.toISOString().split('T')[0])
+          .filter(e => e.fecha.split(' ')[0] < fechaHoy)
           .map(e => (
             <Evento key={e.id} {...e} />
           ))}
       </ul>
     </div>
-
   )
 }
 
-export default ListarEventos
+export default ListarEventosAnteriores
