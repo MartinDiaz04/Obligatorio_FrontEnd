@@ -65,7 +65,6 @@ const BiberonesConsumidos = () => {
         } else {
             setCronometro(`0 hora/s 0 minuto/s`)
         }
-
     }
 
 
