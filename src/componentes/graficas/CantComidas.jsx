@@ -15,43 +15,49 @@ ChartJS.register(
 );
 
 const CantCategorias = () => {
-    const eventos = useSelector(state => state.evento.listaEventos)
-    const [eventosPorDia, setEventosPorDia] = useState([])
+    const eventos = useSelector(state => state.evento.listaEventos);
+    const [eventosPorDia, setEventosPorDia] = useState([]);
 
     useEffect(() => {
-        // Tomo la fecha de hoy y le resto 7 para obtener la semana pasada
         const hoy = new Date();
         const semanaPasada = new Date();
-        semanaPasada.setDate(hoy.getDate() - 8);
+        semanaPasada.setDate(hoy.getDate() - 7); // Obteniendo la fecha de hace 7 días
 
-        // Filtro eventos de la ultima semana
-        const eventosTotales = eventos.filter(e => new Date(e.fecha) > semanaPasada && new Date(e.fecha) < hoy && e.idCategoria == 31)
+        // Filtrar eventos de la última semana y de la categoría específica
+        const eventosTotales = eventos.filter(e => {
+            const fechaEvento = new Date(e.fecha.split(' ')[0]); // Ignorar la hora y obtener solo la fecha
+            return fechaEvento >= semanaPasada && fechaEvento <= hoy && e.idCategoria == 31;
+        });
 
-
-        let datos = []
-        // Recorro los ultimos 7 dias contando cada dia la cantidad de eventos
+        let datos = [];
+        // Recorro los últimos 7 días contando cada día la cantidad de eventos
         for (let i = 0; i <= 7; i++) {
-            const fecha = new Date();
-            // Le resto i dias a la fecha de hoy para ir atras en los dias
-            fecha.setDate(hoy.getDate() - i);
-            // Cuento eventos del dia en el que estoy parado
-            const eventosDia = eventosTotales.filter(e => new Date(e.fecha).getDate() == fecha.getDate()).length            
-            // Creo el objeto y lo agrego al array
+            const fecha = new Date(hoy);
+            fecha.setDate(hoy.getDate() - i); // Ir un día hacia atrás
+
+            // Formatear la fecha para asegurarse de que se compara correctamente
+            const fechaFormateada = fecha.toISOString().split('T')[0];
+
+            // Cuento eventos del día en el que estoy parado
+            const eventosDia = eventosTotales.filter(e => e.fecha.split(' ')[0] == fechaFormateada).length;
+
+            // Crear el objeto y agregarlo al array
             const dia = {
-                fecha: fecha.toISOString().split('T')[0],
+                fecha: fechaFormateada,
                 cantidad: eventosDia,
-            }
-            datos.push(dia)
+            };
+            datos.push(dia);
         }
-        // Seteo los eventos por dia con el array creado antes
-        setEventosPorDia(datos)
-    }, [eventos])
+
+        // Setear los eventos por día con el array creado antes
+        setEventosPorDia(datos);
+    }, [eventos]);
 
     return (
         <div>
             <div className='row'>
                 <div className='col-12'>
-                    <h2>Cantidad de comidas por dia</h2>
+                    <h2>Cantidad de comidas por día</h2>
                     <Bar options={{
                         responsive: true,
                         plugins: {
@@ -67,15 +73,16 @@ const CantCategorias = () => {
                         labels: eventosPorDia.map(e => e.fecha),
                         datasets: [
                             {
-                                label: 'Cantidad de comidas por dia',
+                                label: 'Cantidad de comidas por día',
                                 data: eventosPorDia.map(e => e.cantidad),
                                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
                             }
                         ],
-                    }} />;
+                    }} />
                 </div>
             </div>
         </div>
     )
 }
-export default CantCategorias
+
+export default CantCategorias;
