@@ -18,42 +18,44 @@ const AgregarEvento = () => {
 
 
   const calcularFecha = () => {
-    // Creo variable de fecha para ingresar
-    let fechaFormateada
-    // Creo la variable para la fecha de hoy
+    let fechaFormateada;
+
     const fecha = new Date();
-    // Verifico existencia de fecha, si no existe
+
+    // Función para agregar ceros a la izquierda si es necesario
+    const pad = (num) => num.toString().padStart(2, '0');
+
+    // Obtener fecha actual formateada en el formato YYYY-MM-DD
+    const fechaActual = `${fecha.getFullYear()}-${pad(fecha.getMonth() + 1)}-${pad(fecha.getDate())}`;
+
     if (!fechaEvento.current.value) {
-      // Formateo fecha
-      fechaFormateada = fecha.toISOString().split('T')[0];
-      // Si no existe hora agrego la hora actual a la fecha
+      fechaFormateada = fechaActual;
+
       if (!horaEvento.current.value) {
-        fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();
+        fechaFormateada += ` ${pad(fecha.getHours())}:${pad(fecha.getMinutes())}:${pad(fecha.getSeconds())}`;
       } else {
-        // Si existe hora la agrego a la fecha
-        fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value + ':00';
+        fechaFormateada += ` ${horaEvento.current.value}:00`;
       }
     } else {
-      // Si existe fecha verifico que no sea mayor a la de hoy
-      if (fechaEvento.current.value > fecha.toISOString().split('T')[0]) {
+      if (fechaEvento.current.value > fechaActual) {
         setMensaje('La fecha no puede ser mayor a la de hoy');
         return;
       } else {
-        // En caso de que si exista fecha y no sea mayor a la de hoy formateo
         fechaFormateada = fechaEvento.current.value;
-        // Si no existe hora agrego la hora actual a la fecha
+
         if (!horaEvento.current.value) {
-          fechaFormateada = fechaFormateada + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds();
+          fechaFormateada += ` ${pad(fecha.getHours())}:${pad(fecha.getMinutes())}:${pad(fecha.getSeconds())}`;
         } else {
-          // Si existe hora la agrego a la fecha
-          fechaFormateada = fechaFormateada + ' ' + horaEvento.current.value + ':00';
+          fechaFormateada += ` ${horaEvento.current.value}:00`;
         }
       }
     }
+
     return fechaFormateada;
   }
 
-  const agregarEvento = () => {    
+
+  const agregarEvento = () => {
     const fecha = calcularFecha();
     if (fecha) {
       setSpinnerCarga(true)
@@ -85,7 +87,7 @@ const AgregarEvento = () => {
               idUsuario: userId,
               detalle: detalleEvento.current.value,
               fecha: fecha,
-            }            
+            }
             dispatch(agregarEventoLocal(eventoEstado));
             setMensaje(data.mensaje);
           }
@@ -99,8 +101,8 @@ const AgregarEvento = () => {
   }
 
   return (
-    <div className="agregar-evento-container mt-3">
-      <h1>Agregar Evento</h1>
+    <div className="agregar-evento-contenedor mt-3">
+      <h1 className='text-center'>Agregar Evento</h1>
       <div className="form-group">
         <label htmlFor="categoria">Seleccione categoría:</label>
         <select className="form-control" name="categoria" ref={categoriaEvento}>
@@ -109,15 +111,15 @@ const AgregarEvento = () => {
           ))}
         </select>
       </div>
-      <div className="form-group">
+      <div className="form-group my-2">
         <label htmlFor="fecha">Seleccione fecha:</label>
         <input className="form-control" name="fecha" type="date" ref={fechaEvento} />
       </div>
       <div className="form-group">
         <label htmlFor="hora">Seleccione hora:</label>
         <input className="form-control" name="hora" type="time" ref={horaEvento} />
-      </div>      
-      <div className="form-group">
+      </div>
+      <div className="form-group my-2">
         <input className="form-control" type="text" placeholder="Descripción del evento (opcional)" ref={detalleEvento} />
       </div>
       <button className="btn btn-primary mb-4" onClick={agregarEvento}>Crear evento</button>
