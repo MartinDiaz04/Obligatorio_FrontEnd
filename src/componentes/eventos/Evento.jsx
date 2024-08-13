@@ -14,7 +14,7 @@ const Evento = ({ id, idCategoria, detalle, fecha }) => {
 
 
     // Obtengo la categoria de esta manera, porque cuando renderizan a la vez los componentes, las categorias no estan cargadas    
-    const categoria = categorias.find(c => c.id == idCategoria)
+    const categoria = categorias.find(c => c.id === idCategoria)
     const img = categoria ? categoria.imagen : null
     const tipoCategoria = categoria ? categoria.tipo : "Sin categoria"
     const urlImagen = img ? "https://babytracker.develotion.com/imgs/" + img + ".png" : null

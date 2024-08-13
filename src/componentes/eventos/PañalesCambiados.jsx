@@ -15,15 +15,15 @@ const BiberonesConsumidos = () => {
         const fechaLocal = `${hoy.getFullYear()}-${pad(hoy.getMonth() + 1)}-${pad(hoy.getDate())}`
         setFechaHoy(fechaLocal)
         // Calcular cuantos pañales fueron cambiados el dia de hoy
-        let contador = eventos.filter(e => e.idCategoria == 33 && e.fecha.split(' ')[0] == fechaLocal).length;
+        let contador = eventos.filter(e => e.idCategoria === 33 && e.fecha.split(' ')[0] === fechaLocal).length;
 
-        if (contador == 0) {
+        if (contador === 0) {
             setCronometro(`No se ha registrado ningún cambio de pañal hoy`)
         }        
         // Calcular a que hora fue el último biberón para hacer el cronómetro
         if (contador > 0) {
             // Obtengo todos los eventos de biberón del día de hoy
-            let eventosCambio = eventos.filter(e => e.idCategoria == 33 && e.fecha.split(' ')[0] == fechaLocal);
+            let eventosCambio = eventos.filter(e => e.idCategoria === 33 && e.fecha.split(' ')[0] === fechaLocal);
 
             // Ordena los eventos de pañal de menor a mayor por fecha
             eventosCambio.sort((a, b) => {
@@ -72,7 +72,7 @@ const BiberonesConsumidos = () => {
         <div className="card mb-4">
             <div className="card-body text-center">
                 <h3 className="card-title mb-3">Pañales cambiados hoy:</h3>
-                <p className="display-4 mb-3">{eventos.filter(e => e.idCategoria == 33 && e.fecha.split(' ')[0] == fechaHoy).length}</p>
+                <p className="display-4 mb-3">{eventos.filter(e => e.idCategoria === 33 && e.fecha.split(' ')[0] === fechaHoy).length}</p>
                 <h4 className="card-title mb-3">Último pañal cambiado hace:</h4>
                 <h5 className="font-weight-bold text-muted">{cronometro}</h5>
             </div>

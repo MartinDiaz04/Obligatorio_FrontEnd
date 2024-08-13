@@ -20,7 +20,7 @@ const ListarEventosHoy = () => {
       <h3 className="text-center mb-4">Eventos del día de hoy</h3>
       <ul className="list-unstyled">
         {eventos
-          .filter(e => e.fecha.split(' ')[0] == fechaHoy)
+          .filter(e => e.fecha.split(' ')[0] === fechaHoy)
           .map(e => (
             <Evento key={e.id} {...e} />
           ))}

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { agregarEventoLocal } from '../../features/eventoSlice';
+import eventoSlice, { agregarEventoLocal } from '../../features/eventoSlice';
 import { useRef, useState } from 'react'
 import { spinnerCargando } from '../../features/spinnerSlice';
 import Spinner from '../Spinner';
@@ -81,14 +81,15 @@ const AgregarEvento = () => {
           if (data.codigo === 409) {
             setMensaje(data.mensaje);
           } else {
+            console.log(data.idEvento)
             const eventoEstado = {
               id: data.idEvento,
-              idCategoria: categoriaEvento.current.value,
+              idCategoria: Number(categoriaEvento.current.value),
               idUsuario: userId,
               detalle: detalleEvento.current.value,
               fecha: fecha,
             }
-            dispatch(agregarEventoLocal(eventoEstado));
+            dispatch(agregarEventoLocal(eventoEstado));                     
             setMensaje(data.mensaje);
           }
           setSpinnerCarga(false)

@@ -17,7 +17,7 @@ const BiberonesConsumidos = () => {
         setFechaHoy(fechaLocal)
 
         // Calcular cuantos biberones fueron tomados el día de hoy
-        let contador = eventos.filter(e => e.idCategoria == 35 && e.fecha.split(' ')[0] == fechaLocal).length;
+        let contador = eventos.filter(e => e.idCategoria === 35 && e.fecha.split(' ')[0] === fechaLocal).length;
         if (contador == 0) {
             setCronometro(`No se ha registrado ningún cambio de pañal hoy`)
         }   
@@ -25,7 +25,7 @@ const BiberonesConsumidos = () => {
         // Calcular a que hora fue el último biberón para hacer el cronómetro
         if (contador > 0) {
             // Obtengo todos los eventos de biberón del día de hoy
-            let eventosBiberon = eventos.filter(e => e.idCategoria == 35 && e.fecha.split(' ')[0] == fechaLocal);
+            let eventosBiberon = eventos.filter(e => e.idCategoria === 35 && e.fecha.split(' ')[0] === fechaLocal);
 
             // Ordena los eventos de biberón de menor a mayor por fecha
             eventosBiberon.sort((a, b) => {
@@ -76,7 +76,7 @@ const BiberonesConsumidos = () => {
         <div className="card shadow-sm mb-4">
             <div className="card-body text-center">
                 <h3 className="card-title mb-3">Biberones consumidos hoy:</h3>
-                <p className="display-4 mb-3">{eventos.filter(e => e.idCategoria == 35 && e.fecha.split(' ')[0] == fechaHoy).length}</p>
+                <p className="display-4 mb-3">{eventos.filter(e => e.idCategoria === 35 && e.fecha.split(' ')[0] === fechaHoy).length}</p>
                 <h4 className="card-title mb-3">Último biberón consumido hace:</h4>
                 <h5 className="font-weight-bold text-muted">{cronometro}</h5>
             </div>
