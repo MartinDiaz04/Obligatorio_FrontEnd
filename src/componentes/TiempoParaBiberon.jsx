@@ -19,24 +19,17 @@ const TiempoParaBiberon = () => {
 
         if (ultimoBiberon) {
             // Calculo la diferencia de tiempo
-            let horasRestantes = horaSiguienteBiberon - horaActual 
-            let minutosRestantes = minutosUltimoBiberon - minutosActuales        
-            
-            // Ajusta si los minutos restantes son negativos
-            if (minutosRestantes < 0) {                
-                horasRestantes -= 1;
-                minutosRestantes += 60;
+            let horasRestantes = horaSiguienteBiberon - horaActual
+            let minutosRestantes = minutosUltimoBiberon - minutosActuales
+            if (horasRestantes < 0) {          
+                const tiempo = `Tienes ${horasRestantes} horas y ${minutosRestantes} minutos sin darle el biberon`
+                setTiempo(tiempo)
+                setEnHora('atrasado')
+            } else {
+                const tiempo = `${horasRestantes} horas y ${minutosRestantes} minutos para el proximo biberon`
+                setTiempo(tiempo)
+                setEnHora('enHora')
             }
-            // Asegura que las horas restantes sean positivas
-            if (horasRestantes < 0) {
-                horasRestantes += 24;
-            }
-            
-            const tiempo = `${horasRestantes} horas y ${minutosRestantes} minutos para el proximo biberon`
-
-            setTiempo(tiempo)
-            const claseH = horasRestantes > 0 ? 'enHora' : 'atrasado'
-            setEnHora(claseH)
 
         } else {
             setTiempo('No se ha registrado un biberon hoy')
@@ -46,8 +39,8 @@ const TiempoParaBiberon = () => {
 
 
     return (
-        <div className='text-center'>
-            <h1 className={enHora}>{tiempo}</h1>
+        <div className='text-center tiempo-biberon'>
+            <p className={enHora} id='parrafo-biberon'>{tiempo}</p>
         </div>
     )
 }

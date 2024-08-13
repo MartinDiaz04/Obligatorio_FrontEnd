@@ -4,6 +4,8 @@ import { guardarDepartamentos } from "../features/departamentoSlice";
 import { guardarCiudades } from "../features/ciudadSlice";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { spinnerCargando } from '../features/spinnerSlice'
+import Spinner from './Spinner'
 
 const Registro = () => {
   const url = "https://babytracker.develotion.com/";
@@ -14,9 +16,10 @@ const Registro = () => {
   const departamentoActual = useRef(null);
   const ciudad = useRef(null);
   const departamentos = useSelector(state => state.departamento.listaDepartamentos)
-  const ciudades = useSelector(state => state.ciudad.listaCiudades)
+  const ciudades = useSelector(state => state.ciudad.listaCiudades)  
   const [error, setError] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
+  const usuarioCarga = useSelector(state => state.spinner.loading)
 
   useEffect(() => {
     fetch(url + "/departamentos.php")
@@ -47,6 +50,7 @@ const Registro = () => {
 
   const registrarUsuario = () => {
     if (verificarUsuario()) {
+      dispatch(spinnerCargando(true))
       fetch(url + "/usuarios.php", {
         method: "POST",
         headers: {
@@ -68,10 +72,12 @@ const Registro = () => {
             localStorage.setItem("userId", data.id);
             navigate("/dashboard");
           }
+          dispatch(spinnerCargando(false))
         })
     } else {
       setError(true);
       setMensajeError("Debe completar todos los campos")
+      dispatch(spinnerCargando(false))
     }
 
   };
@@ -93,7 +99,7 @@ const Registro = () => {
           ))}
         </select>
         <label className="form-label mt-3" htmlFor="ciudades">Seleccione ciudad:</label>
-        <select className="form-select p-2" name="ciudades" >
+        <select className="form-select p-2" name="ciudades" ref={ciudad}>
           {ciudades.map(ciudad => (
             <option key={ciudad.id} value={ciudad.id}>
               {ciudad.nombre}

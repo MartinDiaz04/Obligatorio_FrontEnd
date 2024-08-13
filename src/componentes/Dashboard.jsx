@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 import AgregarEvento from "./eventos/AgregarEvento";
 import ListarEventosHoy from "./eventos/ListarEventosHoy";
 import ListarEventosAnteriores from "./eventos/ListarEventosAnteriores";
-import BiberonesConsumidos from "./eventos/BiberonesConsumidos";
-import PañalesCambiados from "./eventos/PañalesCambiados";
 import CantCategorias from "./graficas/CantCategorias";
 import CantComidas from "./graficas/CantComidas";
 import TiempoParaBiberon from "./TiempoParaBiberon";
+import Informe from "./eventos/Informe";
 
 const Dashboard = () => {
   const url = "https://babytracker.develotion.com/"
@@ -69,11 +68,8 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col-6 d-flex justify-content-center">
-          <BiberonesConsumidos />
-        </div>
-        <div className="col-6 d-flex justify-content-center">
-          <PañalesCambiados />
+        <div>
+          <Informe/>
         </div>
         <div className="col-6 d-flex justify-content-center">
           <CantCategorias />
