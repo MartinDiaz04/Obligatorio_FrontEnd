@@ -20,7 +20,7 @@ const CantCategorias = () => {
 
     const cantEventos = categorias.map(c => ({
         categoriaTipo: c.tipo,
-        cantidad: eventos.filter(e => e.idCategoria == c.id).length
+        cantidad: eventos.filter(e => e.idCategoria === c.id).length
     }))
 
 

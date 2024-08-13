@@ -25,8 +25,8 @@ const CantCategorias = () => {
 
         // Filtrar eventos de la última semana y de la categoría específica
         const eventosTotales = eventos.filter(e => {
-            const fechaEvento = new Date(e.fecha.split(' ')[0]); // Ignorar la hora y obtener solo la fecha
-            return fechaEvento >= semanaPasada && fechaEvento <= hoy && e.idCategoria == 31;
+            const fechaEvento = new Date(e.fecha.split(' ')[0]);
+            return fechaEvento >= semanaPasada && fechaEvento <= hoy && e.idCategoria === 31;
         });
 
         let datos = [];
@@ -39,7 +39,7 @@ const CantCategorias = () => {
             const fechaFormateada = fecha.toISOString().split('T')[0];
 
             // Cuento eventos del día en el que estoy parado
-            const eventosDia = eventosTotales.filter(e => e.fecha.split(' ')[0] == fechaFormateada).length;
+            const eventosDia = eventosTotales.filter(e => e.fecha.split(' ')[0] === fechaFormateada).length;
 
             // Crear el objeto y agregarlo al array
             const dia = {
