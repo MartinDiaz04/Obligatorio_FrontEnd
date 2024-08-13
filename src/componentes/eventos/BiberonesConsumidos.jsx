@@ -25,7 +25,7 @@ const BiberonesConsumidos = () => {
                 // Le resto 3 horas a la hora actual para que coincida con la hora de acá
                 const fechaActualizada = new Date(fechaActual.getTime() - (3 * 60 * 60 * 1000))
                 const horaModificada = fechaActualizada.toISOString().split('T')[1].split('.')[0]
-
+                // Convierto a numeros enteros para calcular la diferencia de las horas y los minuto
                 let diferenciaHoras = parseInt(horaModificada.split(':')[0], 10) - parseInt(horaUltimoBiberonHoy.split(':')[0], 10)
                 let diferenciaMinutos = parseInt(horaModificada.split(':')[1], 10) - parseInt(horaUltimoBiberonHoy.split(':')[1], 10)
 
@@ -46,24 +46,28 @@ const BiberonesConsumidos = () => {
             }
         }
 
-        if (contador == 0) {
-            setCronometro(`No se ha registrado ningún biberón hoy`)
-        }
-        // Calcular a qué hora fue el último biberón para hacer el cronometro
+        // Calcular a que hora fue el último biberón para hacer el cronómetro
         if (contador > 0) {
             // Obtengo todos los eventos de biberón del día de hoy
-            let eventosBiberon = eventos.filter(e => e.idCategoria == 35 && e.fecha.split(' ')[0] == fechaLocal)
+            let eventosBiberon = eventos.filter(e => e.idCategoria == 35 && e.fecha.split(' ')[0] == fechaLocal);
 
-            // Obtengo el último evento biberón del día de hoy de los eventos biberones de hoy
-            let ultimoEvento = eventosBiberon[eventosBiberon.length - 1]
+            // Ordena los eventos de biberón de menor a mayor por fecha
+            eventosBiberon.sort((a, b) => {
+                // comparo las fechas
+                return new Date(a.fecha) - new Date(b.fecha);
+            });
 
-            // Obtengo la hora del último biberón consumido
-            let horaUltimoBiberon = ultimoEvento.fecha.split(' ')[1]
-            dispatch(guardarHora(horaUltimoBiberon))
-            calcularCronometro()
+            // Me quedo con el ultimo evento que es el mas reciente
+            let ultimoEvento = eventosBiberon[eventosBiberon.length - 1];
+
+            // Obtengo la hora del biberon mas reciente
+            let horaUltimoBiberon = ultimoEvento.fecha.split(' ')[1];
+            dispatch(guardarHora(horaUltimoBiberon));
+            calcularCronometro();
         } else {
-            dispatch(guardarHora(null))
+            dispatch(guardarHora(null));
         }
+
 
     }, [eventos, horaUltimoBiberonHoy])
 

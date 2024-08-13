@@ -19,22 +19,27 @@ const BiberonesConsumidos = () => {
 
         if (contador == 0) {
             setCronometro(`No se ha registrado ningún cambio de pañal hoy`)
-        }
-        // Calcular a que hora fue el ultimo cambio para hacer el cronometro
+        }        
+        // Calcular a que hora fue el último biberón para hacer el cronómetro
         if (contador > 0) {
+            // Obtengo todos los eventos de biberón del día de hoy
+            let eventosCambio = eventos.filter(e => e.idCategoria == 33 && e.fecha.split(' ')[0] == fechaLocal);
 
-            // Obtengo todos los eventos de pañales del dia de hoy
-            let eventosPañal = eventos.filter(e => e.idCategoria == 33 && e.fecha.split(' ')[0] == fechaLocal)
+            // Ordena los eventos de pañal de menor a mayor por fecha
+            eventosCambio.sort((a, b) => {
+                // comparo las fechas
+                return new Date(a.fecha) - new Date(b.fecha);
+            });
 
-            // Obtengo el ultimo evento de pañal del dia de hoy
-            let ultimoEvento = eventosPañal[eventosPañal.length - 1]
+            // Me quedo con el ultimo evento que es el mas reciente
+            let ultimoEvento = eventosCambio[eventosCambio.length - 1];
 
-            // Obtengo la hora del ultimo pañal cambiado
-            let horaUltimoPañal = ultimoEvento.fecha.split(' ')[1]
-            setHoraUltimoPañalHoy(horaUltimoPañal)
-            calcularCronometro()
+            // Obtengo la hora del biberon mas reciente
+            let horaUltimoCambio = ultimoEvento.fecha.split(' ')[1];
+            setHoraUltimoPañalHoy(horaUltimoCambio);
+            calcularCronometro();
         } else {
-            setHoraUltimoPañalHoy(null)
+            setHoraUltimoPañalHoy(null);
         }
     }, [eventos, horaUltimoPañalHoy])
 
