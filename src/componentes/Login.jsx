@@ -30,7 +30,7 @@ const Login = () => {
       },
       body: JSON.stringify({
         usuario: usuario.current.value,
-        pass: pass.current.value,
+        password: pass.current.value,
       })
     })
       .then((r) => r.json())

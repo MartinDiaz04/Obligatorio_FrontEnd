@@ -58,7 +58,7 @@ const Registro = () => {
         },
         body: JSON.stringify({
           usuario: usuario.current.value,
-          pass: pass.current.value,
+          password: pass.current.value,
           idDepartamento: departamentoActual.current.value,
           idCiudad: ciudad.current.value,
         })
@@ -66,7 +66,7 @@ const Registro = () => {
         .then((r) => r.json())
         .then((data) => {
           if (data.codigo === 409) {
-            setError(true);            
+            setError(true);                        
           } else {
             localStorage.setItem("apiKey", data.apiKey);
             localStorage.setItem("userId", data.id);
